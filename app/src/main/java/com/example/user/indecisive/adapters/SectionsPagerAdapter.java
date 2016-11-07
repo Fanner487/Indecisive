@@ -1,4 +1,4 @@
-package com.example.user.indecisive.fragments;
+package com.example.user.indecisive.adapters;
 
 /**
  * Created by Eamon on 06/11/2016.
@@ -9,6 +9,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.user.indecisive.activities.MainActivity;
+import com.example.user.indecisive.fragments.DrawerFragment;
+import com.example.user.indecisive.fragments.PickerFragment;
 
 /**
  * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
