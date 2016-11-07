@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.user.indecisive.R;
 import com.example.user.indecisive.activities.MainActivity;
 import com.example.user.indecisive.fragments.DrawerFragment;
 import com.example.user.indecisive.fragments.PickerFragment;
@@ -26,7 +27,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        //tifp
 
         Fragment fragment = null;
 
@@ -42,13 +42,15 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        // Show 2 total pages.
         return 2;
     }
 
+    //displays title on tabs
     @Override
     public CharSequence getPageTitle(int position) {
+
         switch (position) {
+
             case 0:
                 return "PICKER";
             case 1:
