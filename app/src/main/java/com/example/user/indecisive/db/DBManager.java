@@ -14,12 +14,25 @@ import android.util.Log;
 
 public class DBManager {
     static final String TAG = DBManager.class.getSimpleName();
+
+    private final Context context;
+
+    private DatabaseHelper DBHelper;
+    private SQLiteDatabase db;
+
+    // constructor for your class
+    public DBManager(Context ctx)
+    {
+// Context is a way that Android transfers info about Activities and apps.
+        this.context = ctx;
+        DBHelper = new DatabaseHelper(context);
+    }
+
     // These are the names of the columns the table will contain
     private static final String KEY_ROWID = "_id";
-
-    public static final String KEY_TASKNAME = "name";
-    public static final String KEY_TASKDESCRIPTION = "description";
-    public static final String KEY_COMPLETESTATUS = "completestatus";
+    public static final String KEY_ITEM = "item";
+    public static final String KEY_TABLE = "description";
+    public static final String KEY_DRAWER = "completestatus";
 
     private static final String DATABASE_NAME = "TaskList";
     private static final String DATABASE_TABLE = "Tasks";
@@ -36,22 +49,13 @@ public class DBManager {
             "create table " + DATABASE_TABLE +
                     " ( " +
                     KEY_ROWID + " integer primary key autoincrement, " +
-                    KEY_TASKNAME + " text not null, " +
-                    KEY_TASKDESCRIPTION + " text not null, " +
-                    KEY_COMPLETESTATUS + " integer not null" +
+                    KEY_ITEM + " text not null, " +
+                    KEY_TABLE + " text not null, " +
+                    KEY_DRAWER + " integer not null" +
                     ");";
 
-    private final Context context;
 
-    private DatabaseHelper DBHelper;
-    private SQLiteDatabase db;
-    // constructor for your class
-    public DBManager(Context ctx)
-    {
-// Context is a way that Android transfers info about Activities and apps.
-        this.context = ctx;
-        DBHelper = new DatabaseHelper(context);
-    }
+
 
 //    This is the helper class that will create the dB if it doesn’t exist and
 //    upgrades it if the structure has changed. It needs a constructor, an

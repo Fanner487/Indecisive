@@ -1,5 +1,6 @@
 package com.example.user.indecisive.activities;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -89,7 +90,8 @@ public class MainActivity extends AppCompatActivity implements
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.search_action) {
-            Toast.makeText(this, "Search pressed", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(MainActivity.this, SearchActivity.class);
+            startActivity(i);
         }
 
         return super.onOptionsItemSelected(item);
