@@ -1,14 +1,18 @@
 package com.example.user.indecisive.fragments;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.user.indecisive.R;
+import com.example.user.indecisive.db.DBManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,10 +23,15 @@ import com.example.user.indecisive.R;
  * create an instance of this fragment.
  */
 public class PickerFragment extends Fragment {
+
+    final String TAG = PickerFragment.class.getSimpleName();
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    Button button;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -59,13 +68,42 @@ public class PickerFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_picker, container, false);
+        // Inflate the layout for this
+        View view = inflater.inflate(R.layout.fragment_picker, container, false);
+
+
+
+        button = (Button) view.findViewById(R.id.buttonAdd);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DBManager db = new DBManager(getContext()).open();
+
+                db.insertItem("Heads", "Coin", 0);
+                db.insertItem("Tails", "Coin", 0);
+
+                Cursor c = db.getAllItems();
+
+                while(c.moveToNext()){
+                    Log.d(TAG, "-----------------");
+                    Log.d(TAG, "ID: " + c.getInt(c.getColumnIndexOrThrow(DBManager.KEY_ROWID)));
+                    Log.d(TAG, "Item: " + c.getString(c.getColumnIndexOrThrow(DBManager.KEY_ITEM)));
+                    Log.d(TAG, "Table: " + c.getString(c.getColumnIndexOrThrow(DBManager.KEY_LIST)));
+                    Log.d(TAG, "Table: " + c.getInt(c.getColumnIndexOrThrow(DBManager.KEY_DRAWER)));
+                }
+
+            }
+        });
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

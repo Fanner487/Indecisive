@@ -20,7 +20,6 @@ public class SearchActivity extends AppCompatActivity {
 
     ListView listView;
     ArrayAdapter<String> adapter;
-    ArrayList<String> arrayCountry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,22 +74,8 @@ public class SearchActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
 
 
-                if(newText != null && !newText.isEmpty()){
-                    final List<String> listFound = new ArrayList<String>();
+               //put changing lists in here
 
-                    for(String item:arrayCountry){
-                        if(item.toLowerCase().contains(newText.toLowerCase())){
-                            listFound.add(item);
-                        }
-
-                        setAdapterAndListener(listFound);
-                    }
-
-                }
-                else{
-
-                    setAdapterAndListener(arrayCountry);
-                }
 
 
                 return false;
