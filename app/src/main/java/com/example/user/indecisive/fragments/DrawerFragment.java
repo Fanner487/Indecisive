@@ -1,14 +1,24 @@
 package com.example.user.indecisive.fragments;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.user.indecisive.R;
+import com.example.user.indecisive.adapters.PickerDrawerListAdapter;
+import com.example.user.indecisive.business.ListChoice;
+import com.example.user.indecisive.db.DBManager;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +37,10 @@ public class DrawerFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+
+    ListView listView;
+    DBManager db;
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,8 +78,31 @@ public class DrawerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_drawer, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_drawer, container, false);
+
+        db = new DBManager(getContext()).open();
+
+        Cursor c = db.getAllItems();
+
+
+
+        final ArrayList<ListChoice> pickerList = db.getListsOfType(1);
+
+        listView = (ListView) view.findViewById(R.id.drawerListView);
+
+        //Todo: shit here needs to be changed
+        PickerDrawerListAdapter adapter = new PickerDrawerListAdapter(getContext(), 0, pickerList);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getContext(), pickerList.get(position).getListName(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

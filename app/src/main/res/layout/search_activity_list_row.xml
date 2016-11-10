@@ -5,19 +5,6 @@
     android:descendantFocusability="blocksDescendants">
 
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        android:id="@+id/searchTextView" />
-
     <Button
         android:text="Button"
         android:layout_width="wrap_content"
@@ -28,4 +15,15 @@
         android:layout_marginRight="75dp"
         android:layout_marginEnd="75dp"
         android:id="@+id/buttonTest" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:id="@+id/searchTextView"
+        android:layout_alignBaseline="@+id/buttonTest"
+        android:layout_alignBottom="@+id/buttonTest"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

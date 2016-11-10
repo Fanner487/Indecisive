@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.ArrayAdapter;
 
 import com.example.user.indecisive.business.ItemChoice;
 import com.example.user.indecisive.business.ListChoice;
@@ -54,14 +55,6 @@ public class DBManager {
     }
 
 
-
-
-//    This is the helper class that will create the dB if it doesn’t exist and
-//    upgrades it if the structure has changed. It needs a constructor, an
-//    onCreate() method and an onUpgrade() method
-
-
-
     // from here on, include whatever methods will be used to access or change data
 //    in the database
     //---opens the database--- any activity that uses the dB will need to do this
@@ -93,8 +86,13 @@ public class DBManager {
 
     }
 
+    public ArrayAdapter<ItemChoice> getListItem(String listName){
+        
+    }
+
     public void insertList(String listName, ArrayList<String> items, int isDrawer){
 
+        //Todo: if list name is unique
         ArrayList<ItemChoice> itemsArray = new ArrayList<>();
 
         for(int i = 0; i < items.size(); i++){
@@ -143,6 +141,31 @@ public class DBManager {
         return list;
     }
 
+    public ArrayList<ListChoice> getListsOfType(int type){
+
+        ArrayList<ListChoice> list = new ArrayList<>();
+
+        Cursor c = db.query(
+                true,
+                DBManager.DATABASE_TABLE,
+                new String[]{DBManager.KEY_LIST, KEY_DRAWER},
+                DBManager.KEY_DRAWER + " = ?",
+                new String[]{Integer.toString(type)},
+                null,
+                null,
+                null,
+                null);
+
+        while(c.moveToNext()){
+            list.add(new ListChoice(
+                    c.getString(c.getColumnIndexOrThrow(DBManager.KEY_LIST)),
+                    c.getInt(c.getColumnIndexOrThrow(DBManager.KEY_DRAWER))
+            ));
+        }
+
+        return list;
+    }
+
     //---retrieves all the rows---
     public Cursor getAllItems()
     {
@@ -157,6 +180,18 @@ public class DBManager {
                 null,
                 null);
     }
+
+    public long deleteList(String listName){
+
+        return db.delete(
+                DATABASE_TABLE,
+                KEY_LIST + " = ?",
+                new String[]{listName});
+    }
+
+
+
+
 
     public ContentValues toContentValues(ItemChoice item){
         ContentValues cv = new ContentValues();

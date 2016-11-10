@@ -81,6 +81,8 @@ public class AddListActivity extends AppCompatActivity {
 
     public ArrayList<String> toList(String value){
 
+        //todo:if any null elements
+
         String[] tempList = value.split("\n");
 
         return new ArrayList<String>(Arrays.asList(tempList));

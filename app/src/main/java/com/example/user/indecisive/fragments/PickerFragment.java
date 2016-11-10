@@ -9,10 +9,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.user.indecisive.R;
+import com.example.user.indecisive.adapters.PickerDrawerListAdapter;
 import com.example.user.indecisive.business.ItemChoice;
+import com.example.user.indecisive.business.ListChoice;
 import com.example.user.indecisive.db.DBManager;
 
 import java.util.ArrayList;
@@ -34,7 +39,9 @@ public class PickerFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    Button button;
+    ListView listView;
+    DBManager db;
+
 
 
     // TODO: Rename and change types of parameters
@@ -83,40 +90,37 @@ public class PickerFragment extends Fragment {
         // Inflate the layout for this
         View view = inflater.inflate(R.layout.fragment_picker, container, false);
 
+        db = new DBManager(getContext()).open();
+
+        Cursor c = db.getAllItems();
+
+        while(c.moveToNext()){
+            Log.d(TAG, "-----------------");
+            Log.d(TAG, "ID: " + c.getInt(c.getColumnIndexOrThrow(DBManager.KEY_ROWID)));
+            Log.d(TAG, "Item: " + c.getString(c.getColumnIndexOrThrow(DBManager.KEY_ITEM)));
+            Log.d(TAG, "Table: " + c.getString(c.getColumnIndexOrThrow(DBManager.KEY_LIST)));
+            Log.d(TAG, "Table: " + c.getInt(c.getColumnIndexOrThrow(DBManager.KEY_DRAWER)));
+        }
 
 
-//        button = (Button) view.findViewById(R.id.buttonAdd);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                DBManager db = new DBManager(getContext()).open();
-//
-//                String[] names = new String[]{"Eamon", "Kate", "James", "Cathal", "Mark", "Sean", "Roisin",
-//                                                "Eoghan", "Eoin", "Becky", "Faye", "Marion"};
-//                db.insertList("Group Names", new ArrayList<>(Arrays.asList(names)), 1);
-//
-//                Cursor c = db.getAllItems();
-//
-//                while(c.moveToNext()){
-//                    Log.d(TAG, "-----------------");
-//                    Log.d(TAG, "ID: " + c.getInt(c.getColumnIndexOrThrow(DBManager.KEY_ROWID)));
-//                    Log.d(TAG, "Item: " + c.getString(c.getColumnIndexOrThrow(DBManager.KEY_ITEM)));
-//                    Log.d(TAG, "Table: " + c.getString(c.getColumnIndexOrThrow(DBManager.KEY_LIST)));
-//                    Log.d(TAG, "Table: " + c.getInt(c.getColumnIndexOrThrow(DBManager.KEY_DRAWER)));
-//                }
-//
-//            }
-//        });
+        final ArrayList<ListChoice> pickerList = db.getListsOfType(0);
+
+        listView = (ListView) view.findViewById(R.id.pickerListView);
+
+        //Todo: shit here needs to be changed
+        PickerDrawerListAdapter adapter = new PickerDrawerListAdapter(getContext(), 0, pickerList);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getContext(), pickerList.get(position).getListName(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {

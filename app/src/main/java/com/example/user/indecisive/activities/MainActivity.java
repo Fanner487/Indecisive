@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements
         });
 
 //        DBManager db = new DBManager(this).open();
-
+//
 //        ArrayList<ListChoice> list = db.getListNames();
 //
 //        for(ListChoice l: list){
