@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.user.indecisive.R;
+import com.example.user.indecisive.business.ItemChoice;
 import com.example.user.indecisive.db.DBManager;
 
 /**
@@ -82,14 +83,13 @@ public class PickerFragment extends Fragment {
 
 
         button = (Button) view.findViewById(R.id.buttonAdd);
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 DBManager db = new DBManager(getContext()).open();
 
-                db.insertItem("Heads", "Coin", 0);
-                db.insertItem("Tails", "Coin", 0);
+                db.insertItem(new ItemChoice("Rock", "Rock Paper Scissors", 1));
 
                 Cursor c = db.getAllItems();
 

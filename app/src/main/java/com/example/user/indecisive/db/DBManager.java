@@ -1,10 +1,15 @@
 package com.example.user.indecisive.db;
 
+import android.content.ClipData;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.example.user.indecisive.business.ItemChoice;
+
+import java.util.ArrayList;
 
 /**
  * Created by Eamon on 06/11/2016.
@@ -70,16 +75,35 @@ public class DBManager {
     }
 
     //---insert a person into the database---
-    public long insertItem(String name, String table, long drawer) throws SQLException
+    public long insertItem(ItemChoice item) throws SQLException
     {
 
-        ContentValues initialValues = new ContentValues();
-        initialValues.put(KEY_ITEM, name);
-        initialValues.put(KEY_LIST, table);
-        initialValues.put(KEY_DRAWER, drawer);
+        ContentValues values = toContentValues(item);
 
-        return db.insertOrThrow(DATABASE_TABLE, null, initialValues);
+        return db.insertOrThrow(DATABASE_TABLE, null, values);
     }
+
+    public void insertItems(ArrayList<ItemChoice> items) throws SQLException
+    {
+        for(ItemChoice i: items){
+            insertItem(i);
+        }
+
+    }
+
+    public void insertList(String listName, ArrayList<String> items, int isDrawer){
+
+        ArrayList<ItemChoice> itemsArray = new ArrayList<>();
+
+        for(int i = 0; i < items.size(); i++){
+
+            itemsArray.add(new ItemChoice(items.get(i), listName, isDrawer));
+        }
+
+        insertItems(itemsArray);
+    }
+
+
     //---deletes a particular person---
     public boolean deleteTAsk(long rowId)
     {
@@ -101,6 +125,16 @@ public class DBManager {
                 null,
                 null,
                 null);
+    }
+
+    public ContentValues toContentValues(ItemChoice item){
+        ContentValues cv = new ContentValues();
+
+        cv.put(DBManager.KEY_ITEM, item.getItem());
+        cv.put(DBManager.KEY_LIST, item.getList());
+        cv.put(DBManager.KEY_DRAWER, item.getDrawer());
+
+        return cv;
     }
 //    //---retrieves a particular row---
 //    public Cursor getTask(long rowId) throws SQLException
