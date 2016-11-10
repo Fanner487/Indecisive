@@ -19,6 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--
+            meta data and intent allows activities to have back button
+            going back to MainActivity or implements a search
+        -->
         <activity android:name=".activities.SearchActivity">
             <meta-data
                 android:name="android.app.searchable"
@@ -26,13 +31,26 @@
                 android:value=".activities.Search" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="activities.MainActivity" />
+                android:value=".activities.MainActivity" />
 
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.AddListActivity"></activity>
+
+        <activity android:name=".activities.AddListActivity">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable"
+                android:value=".activities.Search" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

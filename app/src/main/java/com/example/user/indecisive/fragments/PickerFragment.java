@@ -15,6 +15,9 @@ import com.example.user.indecisive.R;
 import com.example.user.indecisive.business.ItemChoice;
 import com.example.user.indecisive.db.DBManager;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -82,27 +85,29 @@ public class PickerFragment extends Fragment {
 
 
 
-        button = (Button) view.findViewById(R.id.buttonAdd);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                DBManager db = new DBManager(getContext()).open();
-
-                db.insertItem(new ItemChoice("Rock", "Rock Paper Scissors", 1));
-
-                Cursor c = db.getAllItems();
-
-                while(c.moveToNext()){
-                    Log.d(TAG, "-----------------");
-                    Log.d(TAG, "ID: " + c.getInt(c.getColumnIndexOrThrow(DBManager.KEY_ROWID)));
-                    Log.d(TAG, "Item: " + c.getString(c.getColumnIndexOrThrow(DBManager.KEY_ITEM)));
-                    Log.d(TAG, "Table: " + c.getString(c.getColumnIndexOrThrow(DBManager.KEY_LIST)));
-                    Log.d(TAG, "Table: " + c.getInt(c.getColumnIndexOrThrow(DBManager.KEY_DRAWER)));
-                }
-
-            }
-        });
+//        button = (Button) view.findViewById(R.id.buttonAdd);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                DBManager db = new DBManager(getContext()).open();
+//
+//                String[] names = new String[]{"Eamon", "Kate", "James", "Cathal", "Mark", "Sean", "Roisin",
+//                                                "Eoghan", "Eoin", "Becky", "Faye", "Marion"};
+//                db.insertList("Group Names", new ArrayList<>(Arrays.asList(names)), 1);
+//
+//                Cursor c = db.getAllItems();
+//
+//                while(c.moveToNext()){
+//                    Log.d(TAG, "-----------------");
+//                    Log.d(TAG, "ID: " + c.getInt(c.getColumnIndexOrThrow(DBManager.KEY_ROWID)));
+//                    Log.d(TAG, "Item: " + c.getString(c.getColumnIndexOrThrow(DBManager.KEY_ITEM)));
+//                    Log.d(TAG, "Table: " + c.getString(c.getColumnIndexOrThrow(DBManager.KEY_LIST)));
+//                    Log.d(TAG, "Table: " + c.getInt(c.getColumnIndexOrThrow(DBManager.KEY_DRAWER)));
+//                }
+//
+//            }
+//        });
         return view;
     }
 

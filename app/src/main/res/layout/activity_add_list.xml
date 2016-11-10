@@ -10,4 +10,53 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.user.indecisive.activities.AddListActivity">
 
+    <TextView
+        android:text="@string/is_drawer_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etListName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="31dp"
+        android:id="@+id/tvIsDrawerList" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/drawerSwitch"
+        android:layout_alignBaseline="@+id/tvIsDrawerList"
+        android:layout_alignBottom="@+id/tvIsDrawerList"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="@string/list_name"
+        android:ems="10"
+        android:id="@+id/etListName"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonAddList"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:hint="@string/enter_values_separated_by_return"
+        android:ems="10"
+        android:gravity="top"
+        android:id="@+id/etListItems"
+        android:layout_below="@+id/drawerSwitch"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.example.user.indecisive.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,13 +20,19 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.user.indecisive.R;
+import com.example.user.indecisive.business.ListChoice;
+import com.example.user.indecisive.db.DBManager;
 import com.example.user.indecisive.fragments.DrawerFragment;
 import com.example.user.indecisive.fragments.PickerFragment;
 import com.example.user.indecisive.adapters.SectionsPagerAdapter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class MainActivity extends AppCompatActivity implements
         PickerFragment.OnFragmentInteractionListener, DrawerFragment.OnFragmentInteractionListener{
 
+    final String TAG = MainActivity.class.getSimpleName();
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -58,18 +66,31 @@ public class MainActivity extends AppCompatActivity implements
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+//        DBManager db = new DBManager(this).open();
+//
+//                String[] names = new String[]{"Bunsen", "Pinocchios", "Ginos", "Bobos", "Aussie BBQ"};
+//                db.insertList("Restaurants", new ArrayList<>(Arrays.asList(names)), 0);
 
-
-
+        //Todo: change icon on fab
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                createActivityAndStart(AddListActivity.class);
             }
         });
+
+//        DBManager db = new DBManager(this).open();
+
+//        ArrayList<ListChoice> list = db.getListNames();
+//
+//        for(ListChoice l: list){
+//            Log.d(TAG, "----------");
+//            Log.d(TAG, "List Name: " + l.getListName());
+//            Log.d(TAG, "Is Drawer: " + l.getIsDrawer());
+//
+//        }
 
     }
 
@@ -90,8 +111,8 @@ public class MainActivity extends AppCompatActivity implements
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.search_action) {
-            Intent i = new Intent(MainActivity.this, SearchActivity.class);
-            startActivity(i);
+
+            createActivityAndStart(SearchActivity.class);
         }
 
         return super.onOptionsItemSelected(item);
@@ -100,5 +121,11 @@ public class MainActivity extends AppCompatActivity implements
     //Used to recognise the fragments
     @Override
     public void onFragmentInteraction(Uri uri) {}
+
+    public void createActivityAndStart(Class activity){
+
+        Intent i = new Intent(getApplicationContext(), activity);
+        startActivity(i);
+    }
 
 }

@@ -8,7 +8,9 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.user.indecisive.business.ItemChoice;
+import com.example.user.indecisive.business.ListChoice;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -19,17 +21,8 @@ public class DBManager {
     static final String TAG = DBManager.class.getSimpleName();
 
     private final Context context;
-
     private DatabaseHelper DBHelper;
     private SQLiteDatabase db;
-
-    // constructor for your class
-    public DBManager(Context ctx)
-    {
-// Context is a way that Android transfers info about Activities and apps.
-        this.context = ctx;
-        DBHelper = new DatabaseHelper(context);
-    }
 
     // These are the names of the columns the table will contain
     public static final String KEY_ROWID = "_id";
@@ -41,7 +34,7 @@ public class DBManager {
     public static final String DATABASE_TABLE = "items";
     public static final int DATABASE_VERSION = 2;
 
-    // This is the string containing the SQL database create statement
+    //SQL create statement on OnCreate and onUpgrade
     public static final String DATABASE_CREATE =
             "create table " + DATABASE_TABLE +
                     " ( " +
@@ -50,6 +43,15 @@ public class DBManager {
                     KEY_LIST + " text not null, " +
                     KEY_DRAWER + " integer not null" +
                     ");";
+
+
+    // constructor for your class
+    public DBManager(Context ctx)
+    {
+// Context is a way that Android transfers info about Activities and apps.
+        this.context = ctx;
+        DBHelper = new DatabaseHelper(context);
+    }
 
 
 
@@ -110,6 +112,35 @@ public class DBManager {
 // delete statement. If any rows deleted (i.e. >0), returns true
         return db.delete(DATABASE_TABLE, KEY_ROWID +
                 "=" + rowId, null) > 0;
+    }
+
+    public void getItemsFromList(){
+
+    }
+
+    public ArrayList<ListChoice> getListNames(){
+
+        ArrayList<ListChoice> list = new ArrayList<>();
+
+        Cursor c = db.query(
+                true,
+                DBManager.DATABASE_TABLE,
+                new String[]{DBManager.KEY_LIST, KEY_DRAWER},
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+
+        while(c.moveToNext()){
+            list.add(new ListChoice(
+                    c.getString(c.getColumnIndexOrThrow(DBManager.KEY_LIST)),
+                    c.getInt(c.getColumnIndexOrThrow(DBManager.KEY_DRAWER))
+                    ));
+        }
+
+        return list;
     }
 
     //---retrieves all the rows---

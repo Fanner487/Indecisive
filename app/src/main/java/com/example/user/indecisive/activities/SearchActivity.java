@@ -4,22 +4,37 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.user.indecisive.R;
+import com.example.user.indecisive.adapters.SearchListAdapter;
+import com.example.user.indecisive.business.ListChoice;
+import com.example.user.indecisive.db.DBManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
 
+    final String TAG = SearchActivity.class.getSimpleName();
+
     ListView listView;
-    ArrayAdapter<String> adapter;
+    ListAdapter adapter;
+    ArrayList<ListChoice> arrayLists;
+    DBManager db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +42,15 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
 
+        db = new DBManager(this).open();
+
         listView = (ListView) findViewById(R.id.searchListView);
 
         //set adapter first here
+
+        arrayLists = db.getListNames();
+
+        setAdapterAndListener(arrayLists);
     }
 
     @Override
@@ -44,9 +65,7 @@ public class SearchActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu_search, menu);
         MenuItem item = menu.findItem(R.id.menuSearch);
 
-
-        //test this
-//        MenuItemCompat.expandActionView(item);
+        //opens search box
         item.expandActionView();
 
         SearchManager searchManager =
@@ -73,9 +92,23 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
 
+                if(newText != null && !newText.isEmpty()){
 
-               //put changing lists in here
+                    final ArrayList<ListChoice> listFound = new ArrayList<>();
 
+                    for(ListChoice list : arrayLists){
+
+                        if(list.getListName().toLowerCase().contains(newText.toLowerCase())){
+                            listFound.add(list);
+                        }
+
+                        setAdapterAndListener(listFound);
+
+                    }
+                }
+                else{
+                    setAdapterAndListener(arrayLists);
+                }
 
 
                 return false;
@@ -84,7 +117,20 @@ public class SearchActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    public void setAdapterAndListener(final List<String> list){
 
+    public void setAdapterAndListener(final ArrayList<ListChoice> list){
+        adapter = new SearchListAdapter(SearchActivity.this,0, list);
+
+        listView.setAdapter(adapter);
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                Toast.makeText(SearchActivity.this, list.get(position).getListName(), Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
     }
 }
