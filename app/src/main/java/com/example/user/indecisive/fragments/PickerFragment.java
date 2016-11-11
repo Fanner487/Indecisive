@@ -1,7 +1,7 @@
 package com.example.user.indecisive.fragments;
 
 import android.content.Context;
-import android.database.Cursor;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,18 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.user.indecisive.R;
-import com.example.user.indecisive.adapters.PickerDrawerListAdapter;
+import com.example.user.indecisive.activities.RandomPickActivity;
+import com.example.user.indecisive.adapters.PickerDrawerListDisplayAdapter;
 import com.example.user.indecisive.business.ItemChoice;
 import com.example.user.indecisive.business.ListChoice;
 import com.example.user.indecisive.db.DBManager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -107,13 +106,22 @@ public class PickerFragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.pickerListView);
 
         //Todo: shit here needs to be changed
-        PickerDrawerListAdapter adapter = new PickerDrawerListAdapter(getContext(), 0, pickerList);
+        PickerDrawerListDisplayAdapter adapter = new PickerDrawerListDisplayAdapter(getContext(), 0, pickerList);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Toast.makeText(getContext(), pickerList.get(position).getListName(), Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent(getActivity(), RandomPickActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("LIST_NAME", pickerList.get(position).getListName());
+                bundle.putInt("IS_DRAWER", pickerList.get(position).getIsDrawer());
+
+                i.putExtras(bundle);
+                startActivity(i);
             }
         });
 

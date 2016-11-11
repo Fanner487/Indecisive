@@ -11,30 +11,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.user.indecisive.R;
-import com.example.user.indecisive.business.ListChoice;
-
-import org.w3c.dom.Text;
+import com.example.user.indecisive.business.ItemChoice;
 
 import java.util.ArrayList;
 
 /**
- * Created by Eamon on 10/11/2016.
+ * Created by Eamon on 11/11/2016.
  */
 
-public class PickerDrawerListAdapter extends ArrayAdapter<ListChoice> {
-
+public class RandomPickAdapter extends ArrayAdapter<ItemChoice>{
 
     private Context context;
-    private ArrayList<ListChoice> lists;
+    private ArrayList<ItemChoice> items;
     private static LayoutInflater inflater = null;
 
-    public PickerDrawerListAdapter(Context context, int resource, ArrayList<ListChoice> objects) {
+    public RandomPickAdapter(Context context, int resource, ArrayList<ItemChoice> objects) {
         super(context, resource, objects);
+
 
         //do i need this???
         try{
             this.context = context;
-            this.lists = objects;
+            this.items = objects;
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
         catch (Exception e){
@@ -43,10 +41,12 @@ public class PickerDrawerListAdapter extends ArrayAdapter<ListChoice> {
     }
 
 
-    private static class ViewHolder{
-        public TextView tvListName;
-    }
+    //can add new item later
+    public static class ViewHolder{
 
+        //row layout
+        public TextView tvItemChoice;
+    }
 
     @Override
     public long getItemId(int position) {
@@ -55,9 +55,8 @@ public class PickerDrawerListAdapter extends ArrayAdapter<ListChoice> {
 
     @Override
     public int getCount() {
-        return lists.size();
+        return items.size();
     }
-
 
     @NonNull
     @Override
@@ -70,14 +69,12 @@ public class PickerDrawerListAdapter extends ArrayAdapter<ListChoice> {
 
             if(convertView == null){
 
-                view = inflater.inflate(R.layout.picker_drawer_list_row, null);
+                view = inflater.inflate(R.layout.random_picker_drawer_row, null);
                 holder = new ViewHolder();
 
-                holder.tvListName = (TextView) view.findViewById(R.id.pickerDrawerListName);
+                holder.tvItemChoice = (TextView) view.findViewById(R.id.tvChoiceItem);
 
-                holder.tvListName.setText(lists.get(position).getListName());
-
-
+                holder.tvItemChoice.setText(items.get(position).getItem());
 
             }
             else{
@@ -87,6 +84,7 @@ public class PickerDrawerListAdapter extends ArrayAdapter<ListChoice> {
         catch (Exception e){
             e.printStackTrace();
         }
+
 
 
         return view;

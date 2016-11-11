@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.user.indecisive.R;
-import com.example.user.indecisive.adapters.PickerDrawerListAdapter;
+import com.example.user.indecisive.adapters.PickerDrawerListDisplayAdapter;
 import com.example.user.indecisive.business.ListChoice;
 import com.example.user.indecisive.db.DBManager;
 
@@ -92,7 +91,7 @@ public class DrawerFragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.drawerListView);
 
         //Todo: shit here needs to be changed
-        PickerDrawerListAdapter adapter = new PickerDrawerListAdapter(getContext(), 0, pickerList);
+        PickerDrawerListDisplayAdapter adapter = new PickerDrawerListDisplayAdapter(getContext(), 0, pickerList);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

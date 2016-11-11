@@ -21,6 +21,10 @@ import java.util.ArrayList;
 public class DBManager {
     static final String TAG = DBManager.class.getSimpleName();
 
+    public enum ItemType{
+        LIST_CHOICE, ITEM_CHOICE;
+    }
+
     private final Context context;
     private DatabaseHelper DBHelper;
     private SQLiteDatabase db;
@@ -131,14 +135,8 @@ public class DBManager {
                 null,
                 null);
 
-        while(c.moveToNext()){
-            list.add(new ListChoice(
-                    c.getString(c.getColumnIndexOrThrow(DBManager.KEY_LIST)),
-                    c.getInt(c.getColumnIndexOrThrow(DBManager.KEY_DRAWER))
-                    ));
-        }
 
-        return list;
+        return toListChoices(c);
     }
 
     //methods to be made more efficient
@@ -157,14 +155,9 @@ public class DBManager {
                 null,
                 null);
 
-        while(c.moveToNext()){
-            list.add(new ListChoice(
-                    c.getString(c.getColumnIndexOrThrow(DBManager.KEY_LIST)),
-                    c.getInt(c.getColumnIndexOrThrow(DBManager.KEY_DRAWER))
-            ));
-        }
 
-        return list;
+
+        return toListChoices(c);
     }
 
     //---retrieves all the rows---
@@ -204,6 +197,8 @@ public class DBManager {
         return cv;
     }
 
+
+
     public ArrayList<ItemChoice> toItems(Cursor c){
 
         ArrayList<ItemChoice> items = new ArrayList<>();
@@ -219,36 +214,19 @@ public class DBManager {
 
         return items;
     }
-//    //---retrieves a particular row---
-//    public Cursor getTask(long rowId) throws SQLException
-//    {
-//        Cursor mCursor =
-//                db.query(true, DATABASE_TABLE, new String[] {
-//                                KEY_ROWID,
-//                                KEY_TASKNAME,
-//                                KEY_TASKDESCRIPTION,
-//                                KEY_COMPLETESTATUS
-//                        },
-//                        KEY_ROWID + "=" + rowId,
-//                        null,
-//                        null,
-//                        null,
-//                        null,
-//                        null);
-//        if (mCursor != null) {
-//            mCursor.moveToFirst();
-//        }
-//        return mCursor;
-//    }
-//    //---updates a person---
-//    public boolean updateTask(long rowId, String taskName,
-//                              String taskDescription, long completeStatus)
-//    {
-//        ContentValues args = new ContentValues();
-//        args.put(KEY_TASKNAME, taskName);
-//        args.put(KEY_TASKDESCRIPTION, taskDescription);
-//        args.put(KEY_COMPLETESTATUS, completeStatus);
-//        return db.update(DATABASE_TABLE, args,
-//                KEY_ROWID + "=" + rowId, null) > 0;
-//    }
+
+    public ArrayList<ListChoice> toListChoices(Cursor c){
+
+        ArrayList<ListChoice> items = new ArrayList<>();
+
+        while(c.moveToNext()){
+            items.add(new ListChoice(
+                    c.getString(c.getColumnIndexOrThrow(DBManager.KEY_LIST)),
+                    c.getInt(c.getColumnIndexOrThrow(DBManager.KEY_DRAWER))
+            ));
+        }
+
+        return items;
+    }
+
 }

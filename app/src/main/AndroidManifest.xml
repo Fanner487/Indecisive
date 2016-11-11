@@ -37,7 +37,6 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
-
         <activity android:name=".activities.AddListActivity">
             <meta-data
                 android:name="android.app.searchable"
@@ -51,6 +50,7 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.RandomPickActivity"></activity>
     </application>
 
 </manifest>
