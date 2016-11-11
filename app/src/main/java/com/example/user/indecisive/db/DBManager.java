@@ -86,8 +86,20 @@ public class DBManager {
 
     }
 
-    public ArrayAdapter<ItemChoice> getListItem(String listName){
-        
+    public ArrayList<ItemChoice> getListItems(String listName){
+
+        Cursor c = db.query(DATABASE_TABLE, new String[] {
+                        KEY_ROWID,
+                        KEY_ITEM,
+                        KEY_LIST,
+                        KEY_DRAWER},
+                DBManager.KEY_LIST + " = ? ",
+                new String[]{listName},
+                null,
+                null,
+                null);
+
+        return toItems(c);
     }
 
     public void insertList(String listName, ArrayList<String> items, int isDrawer){
@@ -103,18 +115,6 @@ public class DBManager {
         insertItems(itemsArray);
     }
 
-
-    //---deletes a particular person---
-    public boolean deleteTAsk(long rowId)
-    {
-// delete statement. If any rows deleted (i.e. >0), returns true
-        return db.delete(DATABASE_TABLE, KEY_ROWID +
-                "=" + rowId, null) > 0;
-    }
-
-    public void getItemsFromList(){
-
-    }
 
     public ArrayList<ListChoice> getListNames(){
 
@@ -141,6 +141,7 @@ public class DBManager {
         return list;
     }
 
+    //methods to be made more efficient
     public ArrayList<ListChoice> getListsOfType(int type){
 
         ArrayList<ListChoice> list = new ArrayList<>();
@@ -201,6 +202,22 @@ public class DBManager {
         cv.put(DBManager.KEY_DRAWER, item.getDrawer());
 
         return cv;
+    }
+
+    public ArrayList<ItemChoice> toItems(Cursor c){
+
+        ArrayList<ItemChoice> items = new ArrayList<>();
+
+        while(c.moveToNext()){
+            items.add(new ItemChoice(
+                    c.getInt(c.getColumnIndexOrThrow(DBManager.KEY_ROWID)),
+                    c.getString(c.getColumnIndexOrThrow(DBManager.KEY_ITEM)),
+                    c.getString(c.getColumnIndexOrThrow(DBManager.KEY_LIST)),
+                    c.getInt(c.getColumnIndexOrThrow(DBManager.KEY_DRAWER))
+            ));
+        }
+
+        return items;
     }
 //    //---retrieves a particular row---
 //    public Cursor getTask(long rowId) throws SQLException

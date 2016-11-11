@@ -92,14 +92,13 @@ public class PickerFragment extends Fragment {
 
         db = new DBManager(getContext()).open();
 
-        Cursor c = db.getAllItems();
+        ArrayList<ItemChoice> listItems = db.getListItems("Rock Paper Scissors");
 
-        while(c.moveToNext()){
-            Log.d(TAG, "-----------------");
-            Log.d(TAG, "ID: " + c.getInt(c.getColumnIndexOrThrow(DBManager.KEY_ROWID)));
-            Log.d(TAG, "Item: " + c.getString(c.getColumnIndexOrThrow(DBManager.KEY_ITEM)));
-            Log.d(TAG, "Table: " + c.getString(c.getColumnIndexOrThrow(DBManager.KEY_LIST)));
-            Log.d(TAG, "Table: " + c.getInt(c.getColumnIndexOrThrow(DBManager.KEY_DRAWER)));
+        for(int i = 0; i < listItems.size(); i++){
+            Log.d(TAG, "-------------\nID: " + listItems.get(i).getId());
+            Log.d(TAG, "Item: " + listItems.get(i).getItem());
+            Log.d(TAG, "List: " + listItems.get(i).getList());
+            Log.d(TAG, "Drawer: " + listItems.get(i).getDrawer());
         }
 
 
