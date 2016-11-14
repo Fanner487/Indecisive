@@ -1,18 +1,16 @@
 package com.example.user.indecisive.db;
 
-import android.content.ClipData;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.ArrayAdapter;
 
 import com.example.user.indecisive.business.ItemChoice;
 import com.example.user.indecisive.business.ListChoice;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by Eamon on 06/11/2016.
@@ -21,9 +19,6 @@ import java.util.ArrayList;
 public class DBManager {
     static final String TAG = DBManager.class.getSimpleName();
 
-    public enum ItemType{
-        LIST_CHOICE, ITEM_CHOICE;
-    }
 
     private final Context context;
     private DatabaseHelper DBHelper;
@@ -103,7 +98,7 @@ public class DBManager {
                 null,
                 null);
 
-        return toItems(c);
+        return toItemChoices(c);
     }
 
     public void insertList(String listName, ArrayList<String> items, int isDrawer){
@@ -184,9 +179,6 @@ public class DBManager {
     }
 
 
-
-
-
     public ContentValues toContentValues(ItemChoice item){
         ContentValues cv = new ContentValues();
 
@@ -199,7 +191,7 @@ public class DBManager {
 
 
 
-    public ArrayList<ItemChoice> toItems(Cursor c){
+    public ArrayList<ItemChoice> toItemChoices(Cursor c){
 
         ArrayList<ItemChoice> items = new ArrayList<>();
 

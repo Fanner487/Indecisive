@@ -20,43 +20,21 @@ import java.util.ArrayList;
  * Created by Eamon on 10/11/2016.
  */
 
-public class PickerDrawerListDisplayAdapter extends ArrayAdapter<ListChoice> {
+public class PickerDrawerListDisplayAdapter extends BaseListItemAdapter {
 
     //TODO: make a base adapter for the list choices
 
-    private Context context;
-    private ArrayList<ListChoice> lists;
-    private static LayoutInflater inflater = null;
+
 
     public PickerDrawerListDisplayAdapter(Context context, int resource, ArrayList<ListChoice> objects) {
         super(context, resource, objects);
 
-        //do i need this???
-        try{
-            this.context = context;
-            this.lists = objects;
-            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
 
     private static class ViewHolder{
         public TextView tvListName;
     }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public int getCount() {
-        return lists.size();
-    }
-
 
     @NonNull
     @Override
@@ -69,12 +47,13 @@ public class PickerDrawerListDisplayAdapter extends ArrayAdapter<ListChoice> {
 
             if(convertView == null){
 
+                //can put this is a method. Might be complicated
                 view = inflater.inflate(R.layout.picker_drawer_list_row, null);
                 holder = new ViewHolder();
 
                 holder.tvListName = (TextView) view.findViewById(R.id.pickerDrawerListName);
 
-                holder.tvListName.setText(lists.get(position).getListName());
+                holder.tvListName.setText(items.get(position).getListName());
 
             }
             else{
@@ -84,8 +63,6 @@ public class PickerDrawerListDisplayAdapter extends ArrayAdapter<ListChoice> {
         catch (Exception e){
             e.printStackTrace();
         }
-
-
         return view;
     }
 }
