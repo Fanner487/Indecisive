@@ -90,21 +90,22 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
 
+                Log.d("blah", "Text changed");
                 if(newText != null && !newText.isEmpty()){
+                    final List<ListChoice> listFound = new ArrayList<>();
 
-                    final ArrayList<ListChoice> listFound = new ArrayList<>();
+                    for(ListChoice item:arrayLists){
+                        if(item.getListName().toLowerCase().contains(newText.toLowerCase())){
+                            listFound.add(item);
 
-                    for(ListChoice list : arrayLists){
-
-                        if(list.getListName().toLowerCase().contains(newText.toLowerCase())){
-                            listFound.add(list);
                         }
 
                         setAdapterAndListener(listFound);
-
                     }
+
                 }
                 else{
+
                     setAdapterAndListener(arrayLists);
                 }
 
@@ -116,17 +117,16 @@ public class SearchActivity extends AppCompatActivity {
     }
 
 
-    public void setAdapterAndListener(ArrayList<ListChoice> listItems){
-        adapter = new SearchListAdapter(SearchActivity.this,0, listItems);
+    public void setAdapterAndListener(final List<ListChoice> listItems){
+        adapter = new SearchListAdapter(SearchActivity.this,0, (ArrayList<ListChoice>) listItems);
 
         listView.setAdapter(adapter);
 
-        arrayLists = listItems;
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                Toast.makeText(SearchActivity.this, arrayLists.get(position).getListName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SearchActivity.this, listItems.get(position).getListName(), Toast.LENGTH_SHORT).show();
 
             }
         });

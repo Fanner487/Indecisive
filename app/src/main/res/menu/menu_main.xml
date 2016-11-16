@@ -7,7 +7,7 @@
     <item
         android:id="@+id/search_action"
         android:title="Search"
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@mipmap/ic_search"
         app:showAsAction = "always"
         />
 </menu>

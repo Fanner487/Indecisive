@@ -65,9 +65,8 @@ public class SearchListAdapter extends BaseListItemAdapter{
                     @Override
                     public void onClick(View v) {
 
-                        Toast.makeText(context, "Delete " + items.get(position).getListName(), Toast.LENGTH_SHORT).show();
-//
-                        items.remove(position);
+                        Toast.makeText(context, "Edit " + items.get(position).getListName(), Toast.LENGTH_SHORT).show();
+
 
                         notifyDataSetChanged();
 
