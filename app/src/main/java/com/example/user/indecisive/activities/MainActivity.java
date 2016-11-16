@@ -81,16 +81,6 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
-//        DBManager db = new DBManager(this).open();
-//
-//        ArrayList<ListChoice> list = db.getListNames();
-//
-//        for(ListChoice l: list){
-//            Log.d(TAG, "----------");
-//            Log.d(TAG, "List Name: " + l.getListName());
-//            Log.d(TAG, "Is Drawer: " + l.getIsDrawer());
-//
-//        }
 
     }
 

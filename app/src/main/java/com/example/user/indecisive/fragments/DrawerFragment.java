@@ -1,6 +1,7 @@
 package com.example.user.indecisive.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.user.indecisive.R;
+import com.example.user.indecisive.activities.RandomPickActivity;
 import com.example.user.indecisive.adapters.PickerDrawerListDisplayAdapter;
 import com.example.user.indecisive.business.ListChoice;
 import com.example.user.indecisive.db.DBManager;
@@ -39,22 +41,26 @@ public class DrawerFragment extends Fragment {
 
         db = new DBManager(getContext()).open();
 
-        Cursor c = db.getAllItems();
-
-
-
-        final ArrayList<ListChoice> pickerList = db.getListsOfType(1);
+        final ArrayList<ListChoice> drawerList = db.getListsOfType(1);
 
         listView = (ListView) view.findViewById(R.id.drawerListView);
 
         //Todo: shit here needs to be changed
-        PickerDrawerListDisplayAdapter adapter = new PickerDrawerListDisplayAdapter(getContext(), 0, pickerList);
+        PickerDrawerListDisplayAdapter adapter = new PickerDrawerListDisplayAdapter(getContext(), 0, drawerList);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), pickerList.get(position).getListName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), drawerList.get(position).getListName(), Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent(getActivity(), RandomPickActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("LIST_NAME", drawerList.get(position).getListName());
+                bundle.putInt("IS_DRAWER", drawerList.get(position).getIsDrawer());
+                i.putExtras(bundle);
+
+                startActivity(i);
             }
         });
 

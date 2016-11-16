@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -25,6 +26,8 @@ public class RandomPickActivity extends AppCompatActivity {
     Button buttonMakeChoice;
     TextView choiceTextView;
     ArrayList<ItemChoice> items = null;
+    ArrayList<ItemChoice> newItems = null;
+    RandomPickAdapter adapter;
 
     DBManager db;
 
@@ -44,17 +47,42 @@ public class RandomPickActivity extends AppCompatActivity {
 
         items = db.getListItems(listName);
 
-        RandomPickAdapter adapter = new RandomPickAdapter(this, 0, items);
-
+        adapter = new RandomPickAdapter(this, 0, items);
         listView.setAdapter(adapter);
 
-        buttonMakeChoice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String randomChoice = new RandomPick().getRandomFromList(items);
+        if(bundle.getInt("IS_DRAWER") == 0){
+            buttonMakeChoice.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ItemChoice randomChoice = new RandomPick().getRandomFromList(items);
 
-                choiceTextView.setText("Choice: " + randomChoice);
-            }
-        });
+                    choiceTextView.setText("Choice: " + randomChoice.getItem());
+                }
+            });
+        }
+        else{
+
+            buttonMakeChoice.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    ItemChoice randomChoice = new RandomPick().getRandomFromList(items);
+                    choiceTextView.setText("Choice: " + randomChoice.getItem());
+
+                    items.remove(randomChoice);
+
+                    setAdapterAndListener(items);
+
+                }
+            });
+        }
+    }
+
+
+    public void setAdapterAndListener(ArrayList<ItemChoice> listItems){
+        items = listItems;
+        adapter = new RandomPickAdapter(this, 0, listItems);
+        listView.setAdapter(adapter);
+
     }
 }

@@ -81,8 +81,6 @@ public class SearchActivity extends AppCompatActivity {
         searchView.requestFocusFromTouch();
 
 
-
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -118,17 +116,17 @@ public class SearchActivity extends AppCompatActivity {
     }
 
 
-    public void setAdapterAndListener(final ArrayList<ListChoice> list){
-        adapter = new SearchListAdapter(SearchActivity.this,0, list);
+    public void setAdapterAndListener(ArrayList<ListChoice> listItems){
+        adapter = new SearchListAdapter(SearchActivity.this,0, listItems);
 
         listView.setAdapter(adapter);
 
+        arrayLists = listItems;
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                Toast.makeText(SearchActivity.this, list.get(position).getListName(), Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(SearchActivity.this, arrayLists.get(position).getListName(), Toast.LENGTH_SHORT).show();
 
             }
         });

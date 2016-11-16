@@ -26,10 +26,6 @@ import java.util.ArrayList;
 public class PickerFragment extends Fragment {
 
     final String TAG = PickerFragment.class.getSimpleName();
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
     ListView listView;
     DBManager db;
@@ -41,8 +37,6 @@ public class PickerFragment extends Fragment {
         // Required empty public constructor
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,15 +44,6 @@ public class PickerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_picker, container, false);
 
         db = new DBManager(getContext()).open();
-
-        ArrayList<ItemChoice> listItems = db.getListItems("Rock Paper Scissors");
-
-        for(int i = 0; i < listItems.size(); i++){
-            Log.d(TAG, "-------------\nID: " + listItems.get(i).getId());
-            Log.d(TAG, "Item: " + listItems.get(i).getItem());
-            Log.d(TAG, "List: " + listItems.get(i).getList());
-            Log.d(TAG, "Drawer: " + listItems.get(i).getDrawer());
-        }
 
 
         final ArrayList<ListChoice> pickerList = db.getListsOfType(0);

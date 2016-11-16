@@ -14,14 +14,14 @@ public class RandomPick {
     public RandomPick() {
     }
 
-    public String getRandomFromList(ArrayList<ItemChoice> items){
+    public ItemChoice getRandomFromList(ArrayList<ItemChoice> items){
 
 
         Random rand = new Random();
 
         int index = rand.nextInt(items.size());
 
-        return items.get(index).getItem();
+        return items.get(index);
     }
 
 
