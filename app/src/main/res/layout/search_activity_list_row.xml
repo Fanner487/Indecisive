@@ -2,11 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:descendantFocusability="blocksDescendants">
+    android:descendantFocusability="blocksDescendants"
+    >
 
 
-    <Button
-        android:text="Button"
+
+    <ImageButton
+        android:src="@mipmap/ic_edit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -14,16 +16,16 @@
         android:layout_alignParentEnd="true"
         android:layout_marginRight="75dp"
         android:layout_marginEnd="75dp"
+
+
         android:id="@+id/buttonTest" />
 
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
         android:id="@+id/searchTextView"
-        android:layout_alignBaseline="@+id/buttonTest"
-        android:layout_alignBottom="@+id/buttonTest"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:textColor="@color/colorPrimary"
+        android:gravity="center_vertical"/>
 </RelativeLayout>

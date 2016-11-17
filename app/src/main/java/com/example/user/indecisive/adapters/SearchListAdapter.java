@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +39,7 @@ public class SearchListAdapter extends BaseListItemAdapter{
     //can add new item later
     public static class ViewHolder{
         public TextView searchTextView;
-        public Button testButton;
+        public ImageButton testButton;
     }
 
 
@@ -57,7 +58,7 @@ public class SearchListAdapter extends BaseListItemAdapter{
                 holder = new ViewHolder();
 
                 holder.searchTextView = (TextView) view.findViewById(R.id.searchTextView);
-                holder.testButton = (Button) view.findViewById(R.id.buttonTest);
+                holder.testButton = (ImageButton) view.findViewById(R.id.buttonTest);
 
                 holder.searchTextView.setText(items.get(position).getListName());
 
@@ -81,8 +82,6 @@ public class SearchListAdapter extends BaseListItemAdapter{
         catch (Exception e){
             e.printStackTrace();
         }
-
-
 
         return view;
     }

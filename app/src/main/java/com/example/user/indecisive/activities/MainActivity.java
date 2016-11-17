@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.search_action) {
-
+            Toast.makeText(this, "search pressed", Toast.LENGTH_SHORT).show();
             createActivityAndStart(SearchActivity.class);
         }
 

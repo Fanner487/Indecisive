@@ -40,6 +40,7 @@ public class AddListActivity extends AppCompatActivity {
         listName = (EditText) findViewById(R.id.etListName);
         listItems = (EditText) findViewById(R.id.etListItems);
 
+
         db = new DBManager(this).open();
 
         addListButton.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +86,15 @@ public class AddListActivity extends AppCompatActivity {
 
         String[] tempList = value.split("\n");
 
+        ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(tempList));
+
+        for(int i = 0 ; i < arrayList.size(); i++){
+
+            if(arrayList.get(i).equals("") || arrayList.get(i).equals(null) || arrayList.get(i).equals("\n")){
+                arrayList.remove(i);
+            }
+        }
+
         return new ArrayList<String>(Arrays.asList(tempList));
     }
 
@@ -92,7 +102,7 @@ public class AddListActivity extends AppCompatActivity {
 
         boolean result = false;
 
-        if(listName.getText().toString().length() > 0 && listItems.getText().toString().length() >0){
+        if(listName.getText().toString().length() > 0 && listItems.getText().toString().length() > 0){
 
             result = true;
         }

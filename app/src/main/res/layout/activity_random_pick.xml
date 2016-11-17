@@ -17,7 +17,10 @@
         android:textAlignment="center"
         android:background="@color/grey"
         android:textStyle="bold"
+        android:gravity="center_vertical"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/colorPrimary"
         android:id="@+id/choiceTextView" />
 
     <ListView
@@ -34,7 +37,9 @@
         android:layout_height="30dp"
         android:layout_below="@id/randomActivityListView"
         android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/colorPrimaryDark"
 
+        android:textColor="@color/white"
         android:id="@+id/buttonMakeChoice" />
 
 
