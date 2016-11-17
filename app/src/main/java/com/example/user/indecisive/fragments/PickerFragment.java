@@ -31,6 +31,7 @@ public class PickerFragment extends Fragment {
     ListView listView;
     DBManager db;
 
+    ArrayList<ListChoice> pickerList;
 
     private OnFragmentInteractionListener mListener;
 
@@ -47,7 +48,7 @@ public class PickerFragment extends Fragment {
         db = new DBManager(getContext()).open();
 
 
-        final ArrayList<ListChoice> pickerList = db.getListsOfType(0);
+        pickerList = db.getListsOfType(0);
 
         listView = (ListView) view.findViewById(R.id.pickerListView);
 
@@ -61,7 +62,7 @@ public class PickerFragment extends Fragment {
 
                 Toast.makeText(getContext(), pickerList.get(position).getListName(), Toast.LENGTH_SHORT).show();
 
-                ((MainActivity)getActivity()).startActivityWithBundle(getActivity(), RandomPickActivity.class,
+                MainActivity.startActivityWithBundle(getActivity(), RandomPickActivity.class,
                         pickerList.get(position).getListName(), pickerList.get(position).getIsDrawer(), false);
             }
         });
@@ -69,6 +70,15 @@ public class PickerFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        pickerList = db.getListsOfType(0);
+
+        PickerDrawerListDisplayAdapter adapter = new PickerDrawerListDisplayAdapter(getContext(), 0, pickerList);
+        listView.setAdapter(adapter);
+
+        super.onResume();
+    }
 
     @Override
     public void onAttach(Context context) {

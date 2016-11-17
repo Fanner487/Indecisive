@@ -15,6 +15,7 @@ import com.example.user.indecisive.R;
 import com.example.user.indecisive.RandomPick;
 import com.example.user.indecisive.adapters.RandomPickAdapter;
 import com.example.user.indecisive.business.ItemChoice;
+import com.example.user.indecisive.constants.BundleConstants;
 import com.example.user.indecisive.db.DBManager;
 
 import org.w3c.dom.Text;
@@ -37,6 +38,8 @@ public class RandomPickActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_random_pick);
 
+
+
         listView = (ListView) findViewById(R.id.randomActivityListView);
         buttonMakeChoice = (Button) findViewById(R.id.buttonMakeChoice);
         choiceTextView = (TextView) findViewById(R.id.choiceTextView);
@@ -44,14 +47,16 @@ public class RandomPickActivity extends AppCompatActivity {
         db = new DBManager(this).open();
 
         Bundle bundle = getIntent().getExtras();
-        String listName = bundle.getString("LIST_NAME");
+        String listName = bundle.getString(BundleConstants.LIST_NAME);
+
+        setTitle(bundle.getString(BundleConstants.LIST_NAME));
 
         items = db.getListItems(listName);
 
         adapter = new RandomPickAdapter(this, 0, items);
         listView.setAdapter(adapter);
 
-        if(bundle.getInt("IS_DRAWER") == 0){
+        if(bundle.getInt(BundleConstants.IS_DRAWER) == 0){
             buttonMakeChoice.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

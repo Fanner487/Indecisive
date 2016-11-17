@@ -55,4 +55,14 @@ public class ItemChoice {
     public void setDrawer(int drawer) {
         this.drawer = drawer;
     }
+
+    @Override
+    public String toString() {
+        return "ItemChoice{" +
+                "id=" + id +
+                ", item='" + item + '\'' +
+                ", list='" + list + '\'' +
+                ", drawer=" + drawer +
+                '}';
+    }
 }

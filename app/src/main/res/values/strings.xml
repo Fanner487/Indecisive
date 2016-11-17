@@ -11,4 +11,9 @@
     <string name="list_name">List Name</string>
     <string name="enter_values_separated_by_return">Enter values (separated by return)</string>
     <string name="is_drawer_list">Is Drawer List</string>
+    <string name="delete_list">Delete List</string>
+    <string name="update_list">Update List</string>
+    <string name="make_a_choice">Make a Choice</string>
+    <string name="error_list_insert">Error inserting list</string>
+    <string name="fill_all_fields">Please fill all fields</string>
 </resources>

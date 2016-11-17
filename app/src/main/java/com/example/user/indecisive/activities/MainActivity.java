@@ -1,12 +1,10 @@
 package com.example.user.indecisive.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -21,7 +19,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.user.indecisive.R;
-import com.example.user.indecisive.business.ListChoice;
+import com.example.user.indecisive.business.ItemChoice;
 import com.example.user.indecisive.constants.BundleConstants;
 import com.example.user.indecisive.db.DBManager;
 import com.example.user.indecisive.fragments.DrawerFragment;
@@ -29,20 +27,12 @@ import com.example.user.indecisive.fragments.PickerFragment;
 import com.example.user.indecisive.adapters.SectionsPagerAdapter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements
         PickerFragment.OnFragmentInteractionListener, DrawerFragment.OnFragmentInteractionListener{
 
     final String TAG = MainActivity.class.getSimpleName();
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
@@ -73,9 +63,16 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
 
-                startActivityWithBundle(MainActivity.this, AddListActivity.class, null, 0, false);
+                startActivityWithBundle(MainActivity.this, AddEditListActivity.class, null, 0, false);
             }
         });
+
+        DBManager db = new DBManager(this).open();
+        ArrayList<ItemChoice> list = db.getListItems("Group Names");
+
+        for(ItemChoice l : list){
+            Log.d(TAG, l.toString());
+        }
 
 
     }

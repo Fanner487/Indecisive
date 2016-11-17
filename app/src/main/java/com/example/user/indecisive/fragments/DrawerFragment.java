@@ -28,6 +28,8 @@ public class DrawerFragment extends Fragment {
     ListView listView;
     DBManager db;
 
+    ArrayList<ListChoice> drawerList;
+
     private OnFragmentInteractionListener mListener;
 
     public DrawerFragment() {
@@ -42,7 +44,7 @@ public class DrawerFragment extends Fragment {
 
         db = new DBManager(getContext()).open();
 
-        final ArrayList<ListChoice> drawerList = db.getListsOfType(1);
+        drawerList = db.getListsOfType(1);
 
         listView = (ListView) view.findViewById(R.id.drawerListView);
 
@@ -63,6 +65,15 @@ public class DrawerFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        drawerList = db.getListsOfType(1);
+
+        PickerDrawerListDisplayAdapter adapter = new PickerDrawerListDisplayAdapter(getContext(), 1, drawerList);
+        listView.setAdapter(adapter);
+
+        super.onResume();
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

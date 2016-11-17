@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.example.user.indecisive.R;
 import com.example.user.indecisive.business.ItemChoice;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 /**
@@ -62,24 +64,24 @@ public class RandomPickAdapter extends ArrayAdapter<ItemChoice>{
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        View view = null;
-        final ViewHolder holder;
+        View row = null;
+        ViewHolder holder;
 
         try {
 
             if(convertView == null){
 
-                view = inflater.inflate(R.layout.random_picker_drawer_row, null);
-                holder = new ViewHolder();
-
-                holder.tvItemChoice = (TextView) view.findViewById(R.id.tvChoiceItem);
-
-                holder.tvItemChoice.setText(items.get(position).getItem());
+                row = inflater.inflate(R.layout.random_picker_drawer_row, null);
 
             }
             else{
-                view = convertView;
+                row = convertView;
             }
+
+            holder = new ViewHolder();
+            holder.tvItemChoice = (TextView) row.findViewById(R.id.tvChoiceItem);
+            holder.tvItemChoice.setText(items.get(position).getItem());
+
         }
         catch (Exception e){
             e.printStackTrace();
@@ -87,6 +89,6 @@ public class RandomPickAdapter extends ArrayAdapter<ItemChoice>{
 
 
 
-        return view;
+        return row;
     }
 }
