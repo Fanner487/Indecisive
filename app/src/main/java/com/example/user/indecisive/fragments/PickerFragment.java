@@ -52,7 +52,7 @@ public class PickerFragment extends Fragment {
 
         listView = (ListView) view.findViewById(R.id.pickerListView);
 
-        //Todo: shit here needs to be changed
+        //Todo: can be made into function call with picker
         PickerDrawerListDisplayAdapter adapter = new PickerDrawerListDisplayAdapter(getContext(), 0, pickerList);
         listView.setAdapter(adapter);
 
@@ -60,7 +60,6 @@ public class PickerFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Toast.makeText(getContext(), pickerList.get(position).getListName(), Toast.LENGTH_SHORT).show();
 
                 MainActivity.startActivityWithBundle(getActivity(), RandomPickActivity.class,
                         pickerList.get(position).getListName(), pickerList.get(position).getIsDrawer(), false);

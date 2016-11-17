@@ -16,6 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.user.indecisive.R;
+import com.example.user.indecisive.activities.AddEditListActivity;
+import com.example.user.indecisive.activities.MainActivity;
+import com.example.user.indecisive.activities.RandomPickActivity;
 import com.example.user.indecisive.business.ItemChoice;
 import com.example.user.indecisive.business.ListChoice;
 
@@ -29,7 +32,7 @@ public class SearchListAdapter extends BaseListItemAdapter{
 
     //Todo: put icon for drawer or picker
 
-
+    View view;
     //changed the list parameter
     public SearchListAdapter(Context context, int resource, ArrayList<ListChoice> objects) {
         super(context, resource, objects);
@@ -45,9 +48,9 @@ public class SearchListAdapter extends BaseListItemAdapter{
 
     @NonNull
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, ViewGroup parent) {
 
-        View view = null;
+        view = null;
         final ViewHolder holder;
 
         try {
@@ -55,29 +58,30 @@ public class SearchListAdapter extends BaseListItemAdapter{
             if(convertView == null){
 
                 view = inflater.inflate(R.layout.search_activity_list_row, null);
-                holder = new ViewHolder();
 
-                holder.searchTextView = (TextView) view.findViewById(R.id.searchTextView);
-                holder.testButton = (ImageButton) view.findViewById(R.id.buttonTest);
-
-                holder.searchTextView.setText(items.get(position).getListName());
-
-                holder.testButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        Toast.makeText(context, "Edit " + items.get(position).getListName(), Toast.LENGTH_SHORT).show();
-
-
-                        notifyDataSetChanged();
-
-                    }
-                });
 
             }
             else{
                 view = convertView;
             }
+
+
+            holder = new ViewHolder();
+
+            holder.searchTextView = (TextView) view.findViewById(R.id.searchTextView);
+            holder.testButton = (ImageButton) view.findViewById(R.id.buttonTest);
+
+            holder.searchTextView.setText(items.get(position).getListName());
+
+            holder.testButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    MainActivity.startActivityWithBundle(view.getContext(), AddEditListActivity.class,
+                            items.get(position).getListName(),  items.get(position).getIsDrawer(), true);
+
+                }
+            });
         }
         catch (Exception e){
             e.printStackTrace();

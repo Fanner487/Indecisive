@@ -16,4 +16,6 @@
     <string name="make_a_choice">Make a Choice</string>
     <string name="error_list_insert">Error inserting list</string>
     <string name="fill_all_fields">Please fill all fields</string>
+    <string name="pick_from_list">Pick</string>
+    <string name="create_list">Create List</string>
 </resources>

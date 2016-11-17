@@ -48,14 +48,13 @@ public class DrawerFragment extends Fragment {
 
         listView = (ListView) view.findViewById(R.id.drawerListView);
 
-        //Todo: shit here needs to be changed
+        //Todo: can be made into function call with picker
         PickerDrawerListDisplayAdapter adapter = new PickerDrawerListDisplayAdapter(getContext(), 0, drawerList);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), drawerList.get(position).getListName(), Toast.LENGTH_SHORT).show();
 
                 ((MainActivity)getActivity()).startActivityWithBundle(getActivity(), RandomPickActivity.class,
                         drawerList.get(position).getListName(), drawerList.get(position).getIsDrawer(), false);

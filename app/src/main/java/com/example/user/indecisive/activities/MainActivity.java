@@ -67,12 +67,6 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
-        DBManager db = new DBManager(this).open();
-        ArrayList<ItemChoice> list = db.getListItems("Group Names");
-
-        for(ItemChoice l : list){
-            Log.d(TAG, l.toString());
-        }
 
 
     }
@@ -94,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.search_action) {
-            Toast.makeText(this, "search pressed", Toast.LENGTH_SHORT).show();
             createActivityAndStart(SearchActivity.class);
         }
 

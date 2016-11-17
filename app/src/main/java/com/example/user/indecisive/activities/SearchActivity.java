@@ -126,7 +126,11 @@ public class SearchActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                Toast.makeText(SearchActivity.this, listItems.get(position).getListName(), Toast.LENGTH_SHORT).show();
+
+                MainActivity.startActivityWithBundle(SearchActivity.this, RandomPickActivity.class,
+                        listItems.get(position).getListName(), listItems.get(position).getIsDrawer(), false);
+
+                finish();
 
             }
         });

@@ -111,16 +111,10 @@ public class AddEditListActivity extends AppCompatActivity {
 
                     alertDialog.show();
 
-
-
-
                 }
             });//end button listener
         }
 
-
-
-        //TODO: if update/new list for button and change text
         addEditListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,10 +122,8 @@ public class AddEditListActivity extends AppCompatActivity {
                 if(bundle.getBoolean(BundleConstants.IS_EDIT_LIST)){
 
                     if(db.deleteList(bundle.getString(BundleConstants.LIST_NAME)) != -1){
-                        Toast.makeText(AddEditListActivity.this, "Deleted List", Toast.LENGTH_SHORT).show();
 
                         createListAndShowList();
-
                     }
                 }
                 else{
@@ -171,9 +163,6 @@ public class AddEditListActivity extends AppCompatActivity {
 
     //converts long string and converts them to ItemChoice objects
     public ArrayList<String> toList(String value){
-
-        //todo:if any null elements
-
 
         String[] tempList = value.split("\n");
 

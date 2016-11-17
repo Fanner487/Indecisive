@@ -22,15 +22,10 @@ import java.util.ArrayList;
 
 public class PickerDrawerListDisplayAdapter extends BaseListItemAdapter {
 
-    //TODO: make a base adapter for the list choices
-
-
-
     public PickerDrawerListDisplayAdapter(Context context, int resource, ArrayList<ListChoice> objects) {
         super(context, resource, objects);
 
     }
-
 
     private static class ViewHolder{
         public TextView tvListName;
@@ -50,32 +45,37 @@ public class PickerDrawerListDisplayAdapter extends BaseListItemAdapter {
 
                 //can put this is a method. Might be complicated
                 view = inflater.inflate(R.layout.picker_drawer_list_row, null);
-                holder = new ViewHolder();
 
-                holder.tvListName = (TextView) view.findViewById(R.id.pickerDrawerListName);
-                holder.btnEdit = (ImageButton) view.findViewById(R.id.btnEdit);
-
-                holder.tvListName.setText(items.get(position).getListName());
-
-                holder.btnEdit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(context, "Edit pressed", Toast.LENGTH_SHORT).show();
-
-                        MainActivity.startActivityWithBundle(v.getContext(), AddEditListActivity.class,
-                                items.get(position).getListName(), items.get(position).getIsDrawer(), true);
-
-                    }
-                });
 
             }
             else{
                 view = convertView;
             }
+
+
+            holder = new ViewHolder();
+
+            holder.tvListName = (TextView) view.findViewById(R.id.pickerDrawerListName);
+            holder.btnEdit = (ImageButton) view.findViewById(R.id.btnEdit);
+
+            holder.tvListName.setText(items.get(position).getListName());
+
+            holder.btnEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "Edit pressed", Toast.LENGTH_SHORT).show();
+
+                    MainActivity.startActivityWithBundle(v.getContext(), AddEditListActivity.class,
+                            items.get(position).getListName(), items.get(position).getIsDrawer(), true);
+
+                }
+            });
         }
         catch (Exception e){
             e.printStackTrace();
         }
+
         return view;
     }
+
 }
