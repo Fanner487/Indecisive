@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.user.indecisive.R;
+import com.example.user.indecisive.activities.MainActivity;
 import com.example.user.indecisive.activities.RandomPickActivity;
 import com.example.user.indecisive.adapters.PickerDrawerListDisplayAdapter;
 import com.example.user.indecisive.business.ListChoice;
@@ -54,13 +55,8 @@ public class DrawerFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getContext(), drawerList.get(position).getListName(), Toast.LENGTH_SHORT).show();
 
-                Intent i = new Intent(getActivity(), RandomPickActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("LIST_NAME", drawerList.get(position).getListName());
-                bundle.putInt("IS_DRAWER", drawerList.get(position).getIsDrawer());
-                i.putExtras(bundle);
-
-                startActivity(i);
+                ((MainActivity)getActivity()).startActivityWithBundle(getActivity(), RandomPickActivity.class,
+                        drawerList.get(position).getListName(), drawerList.get(position).getIsDrawer());
             }
         });
 

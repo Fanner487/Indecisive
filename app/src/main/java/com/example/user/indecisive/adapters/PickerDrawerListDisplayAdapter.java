@@ -1,17 +1,24 @@
 package com.example.user.indecisive.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.user.indecisive.R;
+import com.example.user.indecisive.activities.AddListActivity;
+import com.example.user.indecisive.activities.MainActivity;
+import com.example.user.indecisive.activities.RandomPickActivity;
 import com.example.user.indecisive.business.ListChoice;
+import com.example.user.indecisive.constants.BundleConstants;
 
 
 import java.util.ArrayList;
@@ -34,6 +41,7 @@ public class PickerDrawerListDisplayAdapter extends BaseListItemAdapter {
 
     private static class ViewHolder{
         public TextView tvListName;
+        public ImageButton btnEdit;
     }
 
     @NonNull
@@ -52,8 +60,20 @@ public class PickerDrawerListDisplayAdapter extends BaseListItemAdapter {
                 holder = new ViewHolder();
 
                 holder.tvListName = (TextView) view.findViewById(R.id.pickerDrawerListName);
+                holder.btnEdit = (ImageButton) view.findViewById(R.id.btnEdit);
 
                 holder.tvListName.setText(items.get(position).getListName());
+
+                holder.btnEdit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(context, "Edit pressed", Toast.LENGTH_SHORT).show();
+
+                        MainActivity.startActivityWithBundle(v.getContext(), AddListActivity.class,
+                                items.get(position).getListName(), items.get(position).getIsDrawer());
+                        
+                    }
+                });
 
             }
             else{

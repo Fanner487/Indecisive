@@ -1,6 +1,7 @@
 package com.example.user.indecisive.activities;
 
 import android.app.LauncherActivity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,6 +44,7 @@ public class AddListActivity extends AppCompatActivity {
 
         db = new DBManager(this).open();
 
+        //TODO: if update/new list for button
         addListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +53,7 @@ public class AddListActivity extends AppCompatActivity {
 
                     String list = listName.getText().toString();
                     ArrayList<String> listOfItems = toList(listItems.getText().toString());
-                    int isDrawer = 0;
+                    int isDrawer;
 
                     if(drawerSwitch.isChecked()){
                         isDrawer = 1;
@@ -60,17 +62,27 @@ public class AddListActivity extends AppCompatActivity {
                         isDrawer = 0;
                     }
 
-                    db.insertList(list, listOfItems, isDrawer);
 
-                    Cursor c = db.getAllItems();
+                    if(db.insertList(list, listOfItems, isDrawer)){
+                        Toast.makeText(AddListActivity.this, "List Created", Toast.LENGTH_SHORT).show();
 
-                    while(c.moveToNext()){
-                        Log.d(TAG, "-----------------");
-                        Log.d(TAG, "ID: " + c.getInt(c.getColumnIndexOrThrow(DBManager.KEY_ROWID)));
-                        Log.d(TAG, "Item: " + c.getString(c.getColumnIndexOrThrow(DBManager.KEY_ITEM)));
-                        Log.d(TAG, "Table: " + c.getString(c.getColumnIndexOrThrow(DBManager.KEY_LIST)));
-                        Log.d(TAG, "Drawer: " + c.getInt(c.getColumnIndexOrThrow(DBManager.KEY_DRAWER)));
+                        Intent i = new Intent(AddListActivity.this, RandomPickActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("LIST_NAME", list);
+                        bundle.putInt("IS_DRAWER", isDrawer);
+                        i.putExtras(bundle);
+                        startActivity(i);
+
+                        clearFields();
+                        finish();
                     }
+                    else{
+                        Toast.makeText(AddListActivity.this, "List already exists", Toast.LENGTH_SHORT).show();
+                    }
+
+
+
+
 
 
                 }
@@ -78,6 +90,12 @@ public class AddListActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void clearFields() {
+
+        listName.setText("");
+        listItems.setText("");
     }
 
     public ArrayList<String> toList(String value){
@@ -90,6 +108,7 @@ public class AddListActivity extends AppCompatActivity {
 
         for(int i = 0 ; i < arrayList.size(); i++){
 
+            //todo: this needs to be changed to take out blank items
             if(arrayList.get(i).equals("") || arrayList.get(i).equals(null) || arrayList.get(i).equals("\n")){
                 arrayList.remove(i);
             }

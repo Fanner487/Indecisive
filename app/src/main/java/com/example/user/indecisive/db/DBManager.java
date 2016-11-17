@@ -10,6 +10,7 @@ import com.example.user.indecisive.business.ItemChoice;
 import com.example.user.indecisive.business.ListChoice;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -101,17 +102,34 @@ public class DBManager {
         return toItemChoices(c);
     }
 
-    public void insertList(String listName, ArrayList<String> items, int isDrawer){
+    public boolean insertList(String listName, ArrayList<String> items, int isDrawer){
+        boolean isUnique = true;
 
-        //Todo: if list name is unique
-        ArrayList<ItemChoice> itemsArray = new ArrayList<>();
 
-        for(int i = 0; i < items.size(); i++){
+        ArrayList<ListChoice> listArray = getListNames();
 
-            itemsArray.add(new ItemChoice(items.get(i), listName, isDrawer));
+        for(ListChoice l: listArray){
+
+            if(listName.equals(l)){
+                isUnique = false;
+                break;
+            }
+
         }
 
-        insertItems(itemsArray);
+        if(isUnique){
+            ArrayList<ItemChoice> itemsArray = new ArrayList<>();
+
+            for(int i = 0; i < items.size(); i++){
+
+                itemsArray.add(new ItemChoice(items.get(i), listName, isDrawer));
+            }
+
+            insertItems(itemsArray);
+        }
+
+
+        return isUnique;
     }
 
 

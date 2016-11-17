@@ -1,6 +1,7 @@
 package com.example.user.indecisive.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.user.indecisive.R;
 import com.example.user.indecisive.business.ListChoice;
+import com.example.user.indecisive.constants.BundleConstants;
 import com.example.user.indecisive.db.DBManager;
 import com.example.user.indecisive.fragments.DrawerFragment;
 import com.example.user.indecisive.fragments.PickerFragment;
@@ -66,18 +68,12 @@ public class MainActivity extends AppCompatActivity implements
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-//        DBManager db = new DBManager(this).open();
-//
-//                String[] names = new String[]{"Bunsen", "Pinocchios", "Ginos", "Bobos", "Aussie BBQ"};
-//                db.insertList("Restaurants", new ArrayList<>(Arrays.asList(names)), 0);
-
-        //Todo: change icon on fab
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createActivityAndStart(AddListActivity.class);
+
+                startActivityWithBundle(getApplicationContext(), AddListActivity.class, null, 0);
             }
         });
 
@@ -116,6 +112,19 @@ public class MainActivity extends AppCompatActivity implements
 
         Intent i = new Intent(getApplicationContext(), activity);
         startActivity(i);
+    }
+
+
+    public static void startActivityWithBundle(Context context, Class activity, String list, int isDrawer){
+
+        Intent i = new Intent(context, activity);
+        Bundle bundle = new Bundle();
+        bundle.putString(BundleConstants.LIST_NAME, list);
+        bundle.putInt(BundleConstants.IS_DRAWER, isDrawer);
+        i.putExtras(bundle);
+        context.startActivity(i);
+
+
     }
 
 }

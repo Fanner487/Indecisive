@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.user.indecisive.R;
 import com.example.user.indecisive.RandomPick;
@@ -66,12 +67,19 @@ public class RandomPickActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    ItemChoice randomChoice = new RandomPick().getRandomFromList(items);
-                    choiceTextView.setText("Choice: " + randomChoice.getItem());
+                    if(items.size() > 0){
 
-                    items.remove(randomChoice);
+                        ItemChoice randomChoice = new RandomPick().getRandomFromList(items);
+                        choiceTextView.setText("Choice: " + randomChoice.getItem());
 
-                    setAdapterAndListener(items);
+                        items.remove(randomChoice);
+
+                        setAdapterAndListener(items);
+                    }
+                    else{
+                        Toast.makeText(RandomPickActivity.this, "List is Empty", Toast.LENGTH_SHORT).show();
+                    }
+
 
                 }
             });
