@@ -62,7 +62,7 @@ public class PickerFragment extends Fragment {
                 Toast.makeText(getContext(), pickerList.get(position).getListName(), Toast.LENGTH_SHORT).show();
 
                 ((MainActivity)getActivity()).startActivityWithBundle(getActivity(), RandomPickActivity.class,
-                        pickerList.get(position).getListName(), pickerList.get(position).getIsDrawer());
+                        pickerList.get(position).getListName(), pickerList.get(position).getIsDrawer(), false);
             }
         });
 

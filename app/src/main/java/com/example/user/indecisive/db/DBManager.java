@@ -103,6 +103,7 @@ public class DBManager {
     }
 
     public boolean insertList(String listName, ArrayList<String> items, int isDrawer){
+
         boolean isUnique = true;
 
 

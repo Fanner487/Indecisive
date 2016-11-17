@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
 
-                startActivityWithBundle(getApplicationContext(), AddListActivity.class, null, 0);
+                startActivityWithBundle(MainActivity.this, AddListActivity.class, null, 0, false);
             }
         });
 
@@ -115,12 +115,13 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-    public static void startActivityWithBundle(Context context, Class activity, String list, int isDrawer){
+    public static void startActivityWithBundle(Context context, Class activity, String list, int isDrawer, boolean isEditList){
 
         Intent i = new Intent(context, activity);
         Bundle bundle = new Bundle();
         bundle.putString(BundleConstants.LIST_NAME, list);
         bundle.putInt(BundleConstants.IS_DRAWER, isDrawer);
+        bundle.putBoolean(BundleConstants.IS_EDIT_LIST, isEditList);
         i.putExtras(bundle);
         context.startActivity(i);
 

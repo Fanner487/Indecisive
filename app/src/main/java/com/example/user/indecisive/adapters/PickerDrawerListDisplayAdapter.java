@@ -70,8 +70,8 @@ public class PickerDrawerListDisplayAdapter extends BaseListItemAdapter {
                         Toast.makeText(context, "Edit pressed", Toast.LENGTH_SHORT).show();
 
                         MainActivity.startActivityWithBundle(v.getContext(), AddListActivity.class,
-                                items.get(position).getListName(), items.get(position).getIsDrawer());
-                        
+                                items.get(position).getListName(), items.get(position).getIsDrawer(), true);
+
                     }
                 });
 

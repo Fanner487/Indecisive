@@ -56,7 +56,7 @@ public class DrawerFragment extends Fragment {
                 Toast.makeText(getContext(), drawerList.get(position).getListName(), Toast.LENGTH_SHORT).show();
 
                 ((MainActivity)getActivity()).startActivityWithBundle(getActivity(), RandomPickActivity.class,
-                        drawerList.get(position).getListName(), drawerList.get(position).getIsDrawer());
+                        drawerList.get(position).getListName(), drawerList.get(position).getIsDrawer(), false);
             }
         });
 
