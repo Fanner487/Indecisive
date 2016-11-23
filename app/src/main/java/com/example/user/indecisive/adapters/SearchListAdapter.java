@@ -30,6 +30,8 @@ import java.util.ArrayList;
 
 public class SearchListAdapter extends BaseListItemAdapter{
 
+    final String TAG = SearchListAdapter.class.getSimpleName();
+
     //Todo: put icon for drawer or picker
 
     View view;

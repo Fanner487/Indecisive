@@ -23,6 +23,8 @@ import java.util.ArrayList;
 
 public class RandomPickAdapter extends ArrayAdapter<ItemChoice>{
 
+    final String TAG = RandomPickAdapter.class.getSimpleName();
+
     private Context context;
     private ArrayList<ItemChoice> items;
     private static LayoutInflater inflater = null;

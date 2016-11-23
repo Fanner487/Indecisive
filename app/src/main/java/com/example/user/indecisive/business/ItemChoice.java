@@ -1,10 +1,11 @@
 package com.example.user.indecisive.business;
-
 /**
  * Created by Eamon on 10/11/2016.
  */
 
 public class ItemChoice {
+
+    final String TAG = ItemChoice.class.getSimpleName();
 
     private int id;
     private String item;

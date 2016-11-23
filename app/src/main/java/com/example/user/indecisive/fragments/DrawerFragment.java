@@ -1,8 +1,6 @@
 package com.example.user.indecisive.fragments;
 
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,19 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.user.indecisive.R;
 import com.example.user.indecisive.activities.MainActivity;
 import com.example.user.indecisive.activities.RandomPickActivity;
 import com.example.user.indecisive.adapters.PickerDrawerListDisplayAdapter;
 import com.example.user.indecisive.business.ListChoice;
+import com.example.user.indecisive.constants.ListType;
 import com.example.user.indecisive.db.DBManager;
 
 import java.util.ArrayList;
 
 public class DrawerFragment extends Fragment {
 
+    final String TAG = DrawerFragment.class.getSimpleName();
 
     ListView listView;
     DBManager db;
@@ -44,40 +43,23 @@ public class DrawerFragment extends Fragment {
 
         db = new DBManager(getContext()).open();
 
-        drawerList = db.getListsOfType(1);
+        drawerList = db.getListsOfType(ListType.DRAWER_LIST);
 
         listView = (ListView) view.findViewById(R.id.drawerListView);
 
-        //Todo: can be made into function call with picker
-        PickerDrawerListDisplayAdapter adapter = new PickerDrawerListDisplayAdapter(getContext(), 0, drawerList);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                ((MainActivity)getActivity()).startActivityWithBundle(getActivity(), RandomPickActivity.class,
-                        drawerList.get(position).getListName(), drawerList.get(position).getIsDrawer(), false);
-            }
-        });
+        MainActivity.setListAdapterAndListener(getActivity(), listView, drawerList);
 
         return view;
     }
 
     @Override
     public void onResume() {
-        drawerList = db.getListsOfType(1);
+        drawerList = db.getListsOfType(ListType.DRAWER_LIST);
 
         PickerDrawerListDisplayAdapter adapter = new PickerDrawerListDisplayAdapter(getContext(), 1, drawerList);
         listView.setAdapter(adapter);
 
         super.onResume();
-    }
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -98,7 +80,6 @@ public class DrawerFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

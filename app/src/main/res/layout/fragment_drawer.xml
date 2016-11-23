@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     tools:context="com.example.user.indecisive.fragments.DrawerFragment">
 
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

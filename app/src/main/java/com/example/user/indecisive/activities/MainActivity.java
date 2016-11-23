@@ -8,30 +8,31 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
-import android.widget.Toast;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.example.user.indecisive.R;
-import com.example.user.indecisive.business.ItemChoice;
+import com.example.user.indecisive.adapters.PickerDrawerListDisplayAdapter;
+import com.example.user.indecisive.business.ListChoice;
 import com.example.user.indecisive.constants.BundleConstants;
-import com.example.user.indecisive.db.DBManager;
 import com.example.user.indecisive.fragments.DrawerFragment;
 import com.example.user.indecisive.fragments.PickerFragment;
 import com.example.user.indecisive.adapters.SectionsPagerAdapter;
 
 import java.util.ArrayList;
 
+
 public class MainActivity extends AppCompatActivity implements
         PickerFragment.OnFragmentInteractionListener, DrawerFragment.OnFragmentInteractionListener{
 
     final String TAG = MainActivity.class.getSimpleName();
+
+    FloatingActionButton fab;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
+        // Create the adapter that will return a fragment for each of the two
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -58,7 +59,10 @@ public class MainActivity extends AppCompatActivity implements
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+
+
+        //fab creates the new list activity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,10 +71,7 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
-
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -94,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
+
     //Used to recognise the fragments
     @Override
     public void onFragmentInteraction(Uri uri) {}
@@ -104,10 +106,10 @@ public class MainActivity extends AppCompatActivity implements
         startActivity(i);
     }
 
-
     public static void startActivityWithBundle(Context context, Class activity, String list, int isDrawer, boolean isEditList){
 
         Intent i = new Intent(context, activity);
+
         Bundle bundle = new Bundle();
         bundle.putString(BundleConstants.LIST_NAME, list);
         bundle.putInt(BundleConstants.IS_DRAWER, isDrawer);
@@ -115,7 +117,24 @@ public class MainActivity extends AppCompatActivity implements
         i.putExtras(bundle);
         context.startActivity(i);
 
+    }
 
+
+
+
+    public static void setListAdapterAndListener(final Context context, ListView listView, final ArrayList<ListChoice> lists){
+        PickerDrawerListDisplayAdapter adapter = new PickerDrawerListDisplayAdapter(context, 0, lists);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                MainActivity.startActivityWithBundle(context, RandomPickActivity.class,
+                        lists.get(position).getListName(), lists.get(position).getIsDrawer(), false);
+            }
+        });
     }
 
 }

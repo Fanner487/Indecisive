@@ -5,8 +5,6 @@
     android:descendantFocusability="blocksDescendants"
     >
 
-
-
     <ImageButton
         android:src="@mipmap/ic_edit_button"
         android:layout_width="wrap_content"
@@ -31,4 +29,5 @@
         android:layout_marginStart="@dimen/row_margin_left_start"
         android:layout_marginLeft="@dimen/row_margin_left_start"
         />
+
 </RelativeLayout>

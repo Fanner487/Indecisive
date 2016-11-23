@@ -16,17 +16,5 @@
         android:gravity="center_vertical"
         android:textColor="@color/colorPrimary"
         android:id="@+id/tvChoiceItem" />
-<!--
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/ic_edit_button"
-        android:id="@+id/imageButton"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"/>
 
--->
 </RelativeLayout>

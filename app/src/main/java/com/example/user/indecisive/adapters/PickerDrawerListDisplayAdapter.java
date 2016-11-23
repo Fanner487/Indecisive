@@ -22,6 +22,8 @@ import java.util.ArrayList;
 
 public class PickerDrawerListDisplayAdapter extends BaseListItemAdapter {
 
+    final String TAG = PickerDrawerListDisplayAdapter.class.getSimpleName();
+
     public PickerDrawerListDisplayAdapter(Context context, int resource, ArrayList<ListChoice> objects) {
         super(context, resource, objects);
 
@@ -63,7 +65,6 @@ public class PickerDrawerListDisplayAdapter extends BaseListItemAdapter {
             holder.btnEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "Edit pressed", Toast.LENGTH_SHORT).show();
 
                     MainActivity.startActivityWithBundle(v.getContext(), AddEditListActivity.class,
                             items.get(position).getListName(), items.get(position).getIsDrawer(), true);

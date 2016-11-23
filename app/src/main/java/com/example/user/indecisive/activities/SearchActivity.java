@@ -90,8 +90,9 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
 
-                Log.d("blah", "Text changed");
+                Log.d(TAG, "Text changed");
                 if(newText != null && !newText.isEmpty()){
+
                     final List<ListChoice> listFound = new ArrayList<>();
 
                     for(ListChoice item:arrayLists){
@@ -109,10 +110,10 @@ public class SearchActivity extends AppCompatActivity {
                     setAdapterAndListener(arrayLists);
                 }
 
-
                 return false;
             }
         });
+
         return super.onCreateOptionsMenu(menu);
     }
 

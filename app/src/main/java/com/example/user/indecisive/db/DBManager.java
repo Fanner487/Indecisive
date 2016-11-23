@@ -5,9 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.user.indecisive.business.ItemChoice;
 import com.example.user.indecisive.business.ListChoice;
+import com.example.user.indecisive.constants.ListType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +20,8 @@ import java.util.Objects;
  */
 
 public class DBManager {
-    static final String TAG = DBManager.class.getSimpleName();
 
+    final String TAG = DBManager.class.getSimpleName();
 
     private final Context context;
     private DatabaseHelper DBHelper;
@@ -46,31 +48,27 @@ public class DBManager {
                     ");";
 
 
-    // constructor for your class
-    public DBManager(Context ctx)
+    public DBManager(Context context)
     {
-// Context is a way that Android transfers info about Activities and apps.
-        this.context = ctx;
+        this.context = context;
         DBHelper = new DatabaseHelper(context);
     }
 
-
-    // from here on, include whatever methods will be used to access or change data
-//    in the database
-    //---opens the database--- any activity that uses the dB will need to do this
+    //returns writable database
     public DBManager open() throws SQLException
     {
         db = DBHelper.getWritableDatabase();
         return this;
     }
-    //---closes the database--- any activity that uses the dB will need to do this
+
+    //closes the database
     public void close()
     {
         DBHelper.close();
     }
 
-    //---insert a person into the database---
-    public long insertItem(ItemChoice item) throws SQLException
+    //insert single item from list in database
+    private long insertItem(ItemChoice item) throws SQLException
     {
 
         ContentValues values = toContentValues(item);
@@ -78,12 +76,47 @@ public class DBManager {
         return db.insertOrThrow(DATABASE_TABLE, null, values);
     }
 
-    public void insertItems(ArrayList<ItemChoice> items) throws SQLException
-    {
+    //take all list items and insert them into database
+    public void insertItems(ArrayList<ItemChoice> items){
+
         for(ItemChoice i: items){
             insertItem(i);
         }
 
+    }
+
+    //makes item objects from parameters
+    //checks if list is unique
+    //inserts list
+    public boolean insertList(String listName, ArrayList<String> items, int isDrawer){
+
+        boolean isUnique = true;
+
+        ArrayList<ListChoice> listArray = getListNames();
+
+        //list name is unique proceed with insert
+        for(ListChoice l: listArray){
+
+            if(listName.equals(l.getListName())){
+                isUnique = false;
+                break;
+            }
+        }
+
+        if(isUnique){
+
+            //make objects from list items
+            ArrayList<ItemChoice> itemsArray = new ArrayList<>();
+
+            for(int i = 0; i < items.size(); i++){
+
+                itemsArray.add(new ItemChoice(items.get(i), listName, isDrawer));
+            }
+
+            insertItems(itemsArray);
+        }
+
+        return isUnique;
     }
 
     public ArrayList<ItemChoice> getListItems(String listName){
@@ -102,41 +135,7 @@ public class DBManager {
         return toItemChoices(c);
     }
 
-    public boolean insertList(String listName, ArrayList<String> items, int isDrawer){
-
-        boolean isUnique = true;
-
-
-        ArrayList<ListChoice> listArray = getListNames();
-
-        for(ListChoice l: listArray){
-
-            if(listName.equals(l)){
-                isUnique = false;
-                break;
-            }
-
-        }
-
-        if(isUnique){
-            ArrayList<ItemChoice> itemsArray = new ArrayList<>();
-
-            for(int i = 0; i < items.size(); i++){
-
-                itemsArray.add(new ItemChoice(items.get(i), listName, isDrawer));
-            }
-
-            insertItems(itemsArray);
-        }
-
-
-        return isUnique;
-    }
-
-
     public ArrayList<ListChoice> getListNames(){
-
-        ArrayList<ListChoice> list = new ArrayList<>();
 
         Cursor c = db.query(
                 true,
@@ -153,17 +152,23 @@ public class DBManager {
         return toListChoices(c);
     }
 
-    //methods to be made more efficient
-    public ArrayList<ListChoice> getListsOfType(int type){
+    public ArrayList<ListChoice> getListsOfType(ListType type){
 
-        ArrayList<ListChoice> list = new ArrayList<>();
+        int listType;
+
+        if(type.equals(ListType.PICKER_LIST)){
+            listType = 0;
+        }
+        else{
+            listType = 1;
+        }
 
         Cursor c = db.query(
                 true,
                 DBManager.DATABASE_TABLE,
                 new String[]{DBManager.KEY_LIST, KEY_DRAWER},
                 DBManager.KEY_DRAWER + " = ?",
-                new String[]{Integer.toString(type)},
+                new String[]{Integer.toString(listType)},
                 null,
                 null,
                 null,
@@ -172,21 +177,6 @@ public class DBManager {
 
 
         return toListChoices(c);
-    }
-
-    //---retrieves all the rows---
-    public Cursor getAllItems()
-    {
-        return db.query(DATABASE_TABLE, new String[] {
-                        KEY_ROWID,
-                        KEY_ITEM,
-                        KEY_LIST,
-                        KEY_DRAWER},
-                null,
-                null,
-                null,
-                null,
-                null);
     }
 
     public long deleteList(String listName){
@@ -197,8 +187,9 @@ public class DBManager {
                 new String[]{listName});
     }
 
-
+    //puts item attributes to ContentValues
     public ContentValues toContentValues(ItemChoice item){
+
         ContentValues cv = new ContentValues();
 
         cv.put(DBManager.KEY_ITEM, item.getItem());
@@ -208,8 +199,7 @@ public class DBManager {
         return cv;
     }
 
-
-
+    //converts cursor rows to item objects
     public ArrayList<ItemChoice> toItemChoices(Cursor c){
 
         ArrayList<ItemChoice> items = new ArrayList<>();
@@ -226,6 +216,7 @@ public class DBManager {
         return items;
     }
 
+    //converts cursor rows to list objects
     public ArrayList<ListChoice> toListChoices(Cursor c){
 
         ArrayList<ListChoice> items = new ArrayList<>();

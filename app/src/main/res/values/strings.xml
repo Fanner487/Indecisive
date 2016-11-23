@@ -18,4 +18,7 @@
     <string name="fill_all_fields">Please fill all fields</string>
     <string name="pick_from_list">Pick</string>
     <string name="create_list">Create List</string>
+    <string name="error_deleting_list">Error deleting list</string>
+    <string name="app_search">Search</string>
+    <string name="choice">Choice:</string>
 </resources>

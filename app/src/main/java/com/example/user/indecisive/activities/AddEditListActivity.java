@@ -71,9 +71,7 @@ public class AddEditListActivity extends AppCompatActivity {
             addEditListButton.setText(R.string.update_list);
             deleteListButton.setVisibility(View.VISIBLE);
 
-
-            //add alertdialog to deleteListButton
-
+            //todo: make this look pretty
             deleteListButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -92,11 +90,11 @@ public class AddEditListActivity extends AppCompatActivity {
 
                                     if(db.deleteList(bundle.getString(BundleConstants.LIST_NAME)) != -1){
 
-                                        Toast.makeText(AddEditListActivity.this, "Deleted List", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(AddEditListActivity.this, "Deleted " + bundle.get(BundleConstants.LIST_NAME), Toast.LENGTH_SHORT).show();
                                         finish();
                                     }
                                     else{
-                                        Toast.makeText(AddEditListActivity.this, "Error Deleting list", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(AddEditListActivity.this, R.string.error_deleting_list, Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             })
@@ -175,7 +173,6 @@ public class AddEditListActivity extends AppCompatActivity {
                 arrayList.remove(i);
             }
 
-            Log.d(TAG, Integer.toString(arrayList.get(i).length()) + ": " + arrayList.get(i));
         }
 
         return new ArrayList<>(Arrays.asList(tempList));

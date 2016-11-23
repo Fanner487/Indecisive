@@ -5,20 +5,18 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.user.indecisive.R;
 import com.example.user.indecisive.activities.MainActivity;
 import com.example.user.indecisive.activities.RandomPickActivity;
 import com.example.user.indecisive.adapters.PickerDrawerListDisplayAdapter;
-import com.example.user.indecisive.business.ItemChoice;
 import com.example.user.indecisive.business.ListChoice;
+import com.example.user.indecisive.constants.ListType;
 import com.example.user.indecisive.db.DBManager;
 
 import java.util.ArrayList;
@@ -48,30 +46,18 @@ public class PickerFragment extends Fragment {
         db = new DBManager(getContext()).open();
 
 
-        pickerList = db.getListsOfType(0);
+        pickerList = db.getListsOfType(ListType.PICKER_LIST);
 
         listView = (ListView) view.findViewById(R.id.pickerListView);
 
-        //Todo: can be made into function call with picker
-        PickerDrawerListDisplayAdapter adapter = new PickerDrawerListDisplayAdapter(getContext(), 0, pickerList);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
-                MainActivity.startActivityWithBundle(getActivity(), RandomPickActivity.class,
-                        pickerList.get(position).getListName(), pickerList.get(position).getIsDrawer(), false);
-            }
-        });
+        MainActivity.setListAdapterAndListener(getActivity(), listView, pickerList);
 
         return view;
     }
 
     @Override
     public void onResume() {
-        pickerList = db.getListsOfType(0);
+        pickerList = db.getListsOfType(ListType.PICKER_LIST);
 
         PickerDrawerListDisplayAdapter adapter = new PickerDrawerListDisplayAdapter(getContext(), 0, pickerList);
         listView.setAdapter(adapter);

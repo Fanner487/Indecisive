@@ -6,6 +6,8 @@ package com.example.user.indecisive.business;
 
 public class ListChoice {
 
+    final String TAG = ListChoice.class.getSimpleName();
+
     private String listName;
     private int isDrawer;
 
@@ -28,5 +30,14 @@ public class ListChoice {
 
     public void setIsDrawer(int isDrawer) {
         this.isDrawer = isDrawer;
+    }
+
+
+    @Override
+    public String toString() {
+        return "ListChoice{" +
+                "listName='" + listName + '\'' +
+                ", isDrawer=" + isDrawer +
+                '}';
     }
 }

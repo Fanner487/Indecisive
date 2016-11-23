@@ -13,10 +13,6 @@ import com.example.user.indecisive.activities.MainActivity;
 import com.example.user.indecisive.fragments.DrawerFragment;
 import com.example.user.indecisive.fragments.PickerFragment;
 
-/**
- * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
- * one of the sections/tabs/pages.
- */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     public SectionsPagerAdapter(FragmentManager fm) {
