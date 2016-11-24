@@ -4,14 +4,19 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import com.example.user.indecisive.R;
 import com.example.user.indecisive.RandomPick;
@@ -30,9 +35,12 @@ public class RandomPickActivity extends AppCompatActivity {
 
     ListView listView;
     Button buttonMakeChoice;
-    TextView choiceTextView;
+    TextSwitcher choiceTextView = null;
     ArrayList<ItemChoice> items = null;
     RandomPickAdapter adapter;
+
+    Animation in;
+    Animation out;
 
     DBManager db;
     Bundle bundle;
@@ -45,7 +53,15 @@ public class RandomPickActivity extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.randomActivityListView);
         buttonMakeChoice = (Button) findViewById(R.id.buttonMakeChoice);
-        choiceTextView = (TextView) findViewById(R.id.choiceTextView);
+        choiceTextView = (TextSwitcher) findViewById(R.id.choiceTextView);
+
+        in = AnimationUtils.loadAnimation(this, R.anim.slide_in_left_fast);
+        out = AnimationUtils.loadAnimation(this, R.anim.slide_out_right_fast);
+
+        choiceTextView.setInAnimation(in);
+        choiceTextView.setOutAnimation(out);
+
+        choiceTextView.setText("Make a choice");
 
         db = new DBManager(this).open();
         bundle = getIntent().getExtras();
@@ -66,7 +82,7 @@ public class RandomPickActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    choiceTextView.setText("Choice: " + getRandomFromList(items).getItem());
+                    choiceTextView.setText(getRandomFromList(items).getItem());
                 }
             });
         }
@@ -82,7 +98,7 @@ public class RandomPickActivity extends AppCompatActivity {
                     if(items.size() > 0){
 
                         ItemChoice randomChoice = getRandomFromList(items);
-                        choiceTextView.setText("Choice: " + randomChoice.getItem());
+                        choiceTextView.setText(randomChoice.getItem());
 
                         items.remove(randomChoice);
 
@@ -102,8 +118,8 @@ public class RandomPickActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
-
                                         setAdapterAndListener(db.getListItems(listName));
+                                        choiceTextView.setText(getResources().getString(R.string.make_a_choice));
                                     }
                                 })
                                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
