@@ -23,11 +23,12 @@ import com.example.user.indecisive.R;
 import com.example.user.indecisive.adapters.SearchListAdapter;
 import com.example.user.indecisive.business.ListChoice;
 import com.example.user.indecisive.db.DBManager;
+import com.example.user.indecisive.interfaces.ListenerOperation;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity implements ListenerOperation{
 
     final String TAG = SearchActivity.class.getSimpleName();
 
@@ -84,7 +85,8 @@ public class SearchActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void listenerOperation() {
+    @Override
+    public void listenerOperation() {
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

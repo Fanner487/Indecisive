@@ -14,6 +14,7 @@ import com.example.user.indecisive.R;
 import com.example.user.indecisive.business.ItemChoice;
 import com.example.user.indecisive.constants.BundleConstants;
 import com.example.user.indecisive.db.DBManager;
+import com.example.user.indecisive.interfaces.ListenerOperation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +23,7 @@ import java.util.Arrays;
 * Add a new list or update and existing one
 *
 * */
-public class AddEditListActivity extends AppCompatActivity {
+public class AddEditListActivity extends AppCompatActivity implements ListenerOperation{
 
 //    todo: change the toast mechanism for update or create list
     final String TAG = AddEditListActivity.class.getSimpleName();
@@ -42,7 +43,7 @@ public class AddEditListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_edit_list);
 
         setupVariables();
-        setupListeners();
+        listenerOperation();
 
     }//end onCreate
 
@@ -138,8 +139,8 @@ public class AddEditListActivity extends AppCompatActivity {
         }
     }
 
-
-    private void setupListeners() {
+    @Override
+    public void listenerOperation() {
 
         //if list coming in is to be updated, set the EditText fields to the
         //data and change button implementation and add delete list button
@@ -226,9 +227,7 @@ public class AddEditListActivity extends AppCompatActivity {
 
             }
         });
-
-    }//end setupListeners
-
+    }
 
     private void setupVariables() {
         addEditListButton = (Button) findViewById(R.id.buttonAddEditList);

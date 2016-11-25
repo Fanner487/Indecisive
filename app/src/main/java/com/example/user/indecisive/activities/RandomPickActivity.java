@@ -17,10 +17,11 @@ import com.example.user.indecisive.adapters.RandomPickAdapter;
 import com.example.user.indecisive.business.ItemChoice;
 import com.example.user.indecisive.constants.BundleConstants;
 import com.example.user.indecisive.db.DBManager;
+import com.example.user.indecisive.interfaces.ListenerOperation;
 
 import java.util.ArrayList;
 
-public class RandomPickActivity extends AppCompatActivity {
+public class RandomPickActivity extends AppCompatActivity implements ListenerOperation {
 
     final String TAG = RandomPickActivity.class.getSimpleName();
 
@@ -72,7 +73,8 @@ public class RandomPickActivity extends AppCompatActivity {
 
     }//end onCreate
 
-    private void listenerOperation() {
+    @Override
+    public void listenerOperation() {
 
         buttonMakeChoice.setOnClickListener(new View.OnClickListener() {
             @Override

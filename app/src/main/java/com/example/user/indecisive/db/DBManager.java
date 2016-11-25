@@ -119,6 +119,7 @@ public class DBManager {
         return isUnique;
     }
 
+    //get values from list
     public ArrayList<ItemChoice> getListItems(String listName){
 
         Cursor c = db.query(DATABASE_TABLE, new String[] {
@@ -174,8 +175,6 @@ public class DBManager {
                 null,
                 null);
 
-
-
         return toListChoices(c);
     }
 
@@ -199,7 +198,7 @@ public class DBManager {
         return cv;
     }
 
-    //converts cursor rows to item objects
+    //converts cursor rows to itemChoice objects
     public ArrayList<ItemChoice> toItemChoices(Cursor c){
 
         ArrayList<ItemChoice> items = new ArrayList<>();
@@ -216,7 +215,7 @@ public class DBManager {
         return items;
     }
 
-    //converts cursor rows to list objects
+    //converts cursor rows to ListChoice objects
     public ArrayList<ListChoice> toListChoices(Cursor c){
 
         ArrayList<ListChoice> items = new ArrayList<>();

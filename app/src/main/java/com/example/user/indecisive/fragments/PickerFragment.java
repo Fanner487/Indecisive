@@ -40,15 +40,13 @@ public class PickerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this
+
         View view = inflater.inflate(R.layout.fragment_picker, container, false);
 
+        listView = (ListView) view.findViewById(R.id.pickerListView);
         db = new DBManager(getContext()).open();
 
-
         pickerList = db.getListsOfType(ListType.PICKER_LIST);
-
-        listView = (ListView) view.findViewById(R.id.pickerListView);
 
         MainActivity.setListAdapterAndListener(getActivity(), listView, pickerList);
 
@@ -84,7 +82,6 @@ public class PickerFragment extends Fragment {
 
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

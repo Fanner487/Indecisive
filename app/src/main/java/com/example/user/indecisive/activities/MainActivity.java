@@ -23,12 +23,13 @@ import com.example.user.indecisive.constants.BundleConstants;
 import com.example.user.indecisive.fragments.DrawerFragment;
 import com.example.user.indecisive.fragments.PickerFragment;
 import com.example.user.indecisive.adapters.SectionsPagerAdapter;
+import com.example.user.indecisive.interfaces.ListenerOperation;
 
 import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity implements
-        PickerFragment.OnFragmentInteractionListener, DrawerFragment.OnFragmentInteractionListener{
+        PickerFragment.OnFragmentInteractionListener, DrawerFragment.OnFragmentInteractionListener, ListenerOperation{
 
     final String TAG = MainActivity.class.getSimpleName();
 
@@ -63,7 +64,8 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-    private void listenerOperation() {
+    @Override
+    public void listenerOperation() {
 
         //fab creates the new list activity
         fab.setOnClickListener(new View.OnClickListener() {
