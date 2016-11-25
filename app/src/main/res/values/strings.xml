@@ -23,4 +23,9 @@
     <string name="choice">Choice:</string>
     <string name="delete_list_popup">Delete List</string>
     <string name="delete_list_prompt">Are you sure you want to delete the list?</string>
+    <string name="deleted">Deleted</string>
+    <string name="empty_list">List is Empty</string>
+    <string name="reload_list">Would you like to reload the list?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

@@ -29,6 +29,7 @@ public class RandomPickActivity extends AppCompatActivity {
     TextSwitcher choiceTextView = null;
     ArrayList<ItemChoice> items = null;
     RandomPickAdapter adapter;
+    String listName;
 
     Animation in;
     Animation out;
@@ -46,6 +47,10 @@ public class RandomPickActivity extends AppCompatActivity {
         buttonMakeChoice = (Button) findViewById(R.id.buttonMakeChoice);
         choiceTextView = (TextSwitcher) findViewById(R.id.choiceTextView);
 
+        bundle = getIntent().getExtras();
+        db = new DBManager(this).open();
+
+        //animations run whenever text changes
         in = AnimationUtils.loadAnimation(this, R.anim.slide_in_left_fast);
         out = AnimationUtils.loadAnimation(this, R.anim.slide_out_right_fast);
 
@@ -54,10 +59,7 @@ public class RandomPickActivity extends AppCompatActivity {
 
         choiceTextView.setText(getResources().getString(R.string.make_a_choice));
 
-        db = new DBManager(this).open();
-        bundle = getIntent().getExtras();
-
-        final String listName = bundle.getString(BundleConstants.LIST_NAME);
+        listName = bundle.getString(BundleConstants.LIST_NAME);
 
         //sets title of activity to list name
         setTitle(listName);
@@ -66,23 +68,23 @@ public class RandomPickActivity extends AppCompatActivity {
 
         setAdapterAndListener(items);
 
-        //picker list operation
-        if(bundle.getInt(BundleConstants.IS_DRAWER) == 0){
+        listenerOperation();
 
-            buttonMakeChoice.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+    }//end onCreate
+
+    private void listenerOperation() {
+
+        buttonMakeChoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //picker list operation
+                if(bundle.getInt(BundleConstants.IS_DRAWER) == 0){
 
                     choiceTextView.setText(getRandomFromList(items).getItem());
                 }
-            });
-        }
-        //drawer list operation
-        else{
-
-            buttonMakeChoice.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                //drawer list operation
+                else{
 
                     //while the list still has values
                     //otherwise, give option to reload list
@@ -95,30 +97,31 @@ public class RandomPickActivity extends AppCompatActivity {
 
                         //reloads adapter and listener with item out of list
                         setAdapterAndListener(items);
+
                     }
                     else{
 
                         AlertDialog.Builder dialog = new AlertDialog.Builder(RandomPickActivity.this);
 
-                        dialog.setTitle("List is Empty");
+                        dialog.setTitle(getResources().getString(R.string.empty_list));
 
                         dialog
-                                .setMessage("Would you like to reload the list?")
+                                .setMessage(getResources().getString(R.string.reload_list))
                                 .setCancelable(true)
-                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
                                         setAdapterAndListener(db.getListItems(listName));
                                         choiceTextView.setText(getResources().getString(R.string.make_a_choice));
+
                                     }
                                 })
-                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                .setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        dialog.cancel();
-                                        // do I need this?
 
+                                        dialog.cancel();
                                         finish();
                                     }
                                 });
@@ -127,16 +130,11 @@ public class RandomPickActivity extends AppCompatActivity {
 
                         alertDialog.show();
                     }
+                }//end else
+            }
+        });
 
-
-                }//end on click
-
-            });//end button make choice listener
-
-        }//end else
-
-    }//end onCreate
-
+    }
 
     private void setAdapterAndListener(ArrayList<ItemChoice> listItems){
         items = listItems;
@@ -149,4 +147,6 @@ public class RandomPickActivity extends AppCompatActivity {
 
         return new RandomPick().getRandomFromList(items);
     }
+
+
 }

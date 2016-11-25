@@ -33,34 +33,37 @@ public class MainActivity extends AppCompatActivity implements
     final String TAG = MainActivity.class.getSimpleName();
 
     FloatingActionButton fab;
+    Toolbar toolbar;
+    TabLayout tabLayout;
 
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    private ViewPager mViewPager;
+    SectionsPagerAdapter mSectionsPagerAdapter;
+    ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        // Create the adapter that will return a fragment for each of the two
-        // primary sections of the activity.
+        // adapter that returns a fragment for each of the two tabs of activity
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        listenerOperation();
+
+    }
+
+    private void listenerOperation() {
 
         //fab creates the new list activity
         fab.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +74,36 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
+    }
+
+    //called by any class that needs to create a new Intent
+    //TODO: put this in a separate class?
+    public static void startActivityWithBundle(Context context, Class activity, String list, int isDrawer, boolean isEditList){
+
+        Intent i = new Intent(context, activity);
+
+        Bundle bundle = new Bundle();
+        bundle.putString(BundleConstants.LIST_NAME, list);
+        bundle.putInt(BundleConstants.IS_DRAWER, isDrawer);
+        bundle.putBoolean(BundleConstants.IS_EDIT_LIST, isEditList);
+        i.putExtras(bundle);
+        context.startActivity(i);
+
+    }
+
+    //used by drawer/picker fragment to set listeners
+    public static void setListAdapterAndListener(final Context context, ListView listView, final ArrayList<ListChoice> lists){
+        PickerDrawerListDisplayAdapter adapter = new PickerDrawerListDisplayAdapter(context, 0, lists);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                MainActivity.startActivityWithBundle(context, RandomPickActivity.class,
+                        lists.get(position).getListName(), lists.get(position).getIsDrawer(), false);
+            }
+        });
     }
 
     @Override
@@ -100,33 +133,6 @@ public class MainActivity extends AppCompatActivity implements
 
         Intent i = new Intent(getApplicationContext(), activity);
         startActivity(i);
-    }
-
-    public static void startActivityWithBundle(Context context, Class activity, String list, int isDrawer, boolean isEditList){
-
-        Intent i = new Intent(context, activity);
-
-        Bundle bundle = new Bundle();
-        bundle.putString(BundleConstants.LIST_NAME, list);
-        bundle.putInt(BundleConstants.IS_DRAWER, isDrawer);
-        bundle.putBoolean(BundleConstants.IS_EDIT_LIST, isEditList);
-        i.putExtras(bundle);
-        context.startActivity(i);
-
-    }
-
-    public static void setListAdapterAndListener(final Context context, ListView listView, final ArrayList<ListChoice> lists){
-        PickerDrawerListDisplayAdapter adapter = new PickerDrawerListDisplayAdapter(context, 0, lists);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                MainActivity.startActivityWithBundle(context, RandomPickActivity.class,
-                        lists.get(position).getListName(), lists.get(position).getIsDrawer(), false);
-            }
-        });
     }
 
 }

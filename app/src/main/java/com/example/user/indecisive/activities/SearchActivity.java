@@ -36,17 +36,15 @@ public class SearchActivity extends AppCompatActivity {
     ArrayList<ListChoice> arrayLists;
     DBManager db;
 
+    SearchView searchView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-
         db = new DBManager(this).open();
-
         listView = (ListView) findViewById(R.id.searchListView);
-
-        //set adapter first here
 
         arrayLists = db.getListNames();
 
@@ -68,9 +66,9 @@ public class SearchActivity extends AppCompatActivity {
         //opens search box
         item.expandActionView();
 
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        final SearchView searchView = (SearchView) item.getActionView();
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+
+        searchView = (SearchView) item.getActionView();
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
 
@@ -78,8 +76,15 @@ public class SearchActivity extends AppCompatActivity {
         searchView.setIconifiedByDefault(false);
         searchView.setFocusable(true);
         searchView.setIconified(false);
+        searchView.setQueryHint(getResources().getString(R.string.app_search));
         searchView.requestFocusFromTouch();
 
+        listenerOperation();
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private void listenerOperation() {
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -90,12 +95,13 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
 
-                Log.d(TAG, "Text changed");
                 if(newText != null && !newText.isEmpty()){
 
                     final List<ListChoice> listFound = new ArrayList<>();
 
                     for(ListChoice item:arrayLists){
+
+                        //adds list name to new list array if it contains search text
                         if(item.getListName().toLowerCase().contains(newText.toLowerCase())){
                             listFound.add(item);
 
@@ -113,8 +119,6 @@ public class SearchActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-        return super.onCreateOptionsMenu(menu);
     }
 
 
@@ -122,7 +126,6 @@ public class SearchActivity extends AppCompatActivity {
         adapter = new SearchListAdapter(SearchActivity.this,0, (ArrayList<ListChoice>) listItems);
 
         listView.setAdapter(adapter);
-
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
