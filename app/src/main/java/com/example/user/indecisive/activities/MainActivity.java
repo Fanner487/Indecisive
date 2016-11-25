@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+
         // Create the adapter that will return a fragment for each of the two
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -58,9 +61,6 @@ public class MainActivity extends AppCompatActivity implements
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-
 
         //fab creates the new list activity
         fab.setOnClickListener(new View.OnClickListener() {
@@ -82,19 +82,15 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.search_action) {
             createActivityAndStart(SearchActivity.class);
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 
     //Used to recognise the fragments
     @Override
@@ -119,9 +115,6 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-
-
-
     public static void setListAdapterAndListener(final Context context, ListView listView, final ArrayList<ListChoice> lists){
         PickerDrawerListDisplayAdapter adapter = new PickerDrawerListDisplayAdapter(context, 0, lists);
         listView.setAdapter(adapter);
@@ -129,7 +122,6 @@ public class MainActivity extends AppCompatActivity implements
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
 
                 MainActivity.startActivityWithBundle(context, RandomPickActivity.class,
                         lists.get(position).getListName(), lists.get(position).getIsDrawer(), false);

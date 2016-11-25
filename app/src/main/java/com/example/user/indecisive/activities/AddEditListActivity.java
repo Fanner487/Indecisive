@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,8 +18,13 @@ import com.example.user.indecisive.db.DBManager;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/*
+* Add a new list or update and existing one
+*
+* */
 public class AddEditListActivity extends AppCompatActivity {
 
+//    todo: change the toast mechanism for update or create list
     final String TAG = AddEditListActivity.class.getSimpleName();
 
     Button addEditListButton;
@@ -35,7 +39,7 @@ public class AddEditListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_list);
+        setContentView(R.layout.activity_add_edit_list);
 
         addEditListButton = (Button) findViewById(R.id.buttonAddEditList);
         deleteListButton = (Button) findViewById(R.id.buttonDeleteList);
@@ -49,10 +53,9 @@ public class AddEditListActivity extends AppCompatActivity {
         //hides button when in add list mode
         deleteListButton.setVisibility(View.GONE);
 
-        //if list coming in is to be edited, set the EditText fields to the
+        //if list coming in is to be updated, set the EditText fields to the
         //data and change button implementation and add delete list button
         if(bundle.getBoolean(BundleConstants.IS_EDIT_LIST)){
-
 
             etListName.setText(bundle.getString(BundleConstants.LIST_NAME));
 
@@ -64,7 +67,7 @@ public class AddEditListActivity extends AppCompatActivity {
             }
 
 
-            String listItemsString = changeToString(db.getListItems(bundle.getString(BundleConstants.LIST_NAME)));
+            String listItemsString = itemsToString(db.getListItems(bundle.getString(BundleConstants.LIST_NAME)));
 
             etListItems.setText(listItemsString);
 
@@ -78,10 +81,10 @@ public class AddEditListActivity extends AppCompatActivity {
 
                     AlertDialog.Builder dialog = new AlertDialog.Builder(AddEditListActivity.this);
 
-                    dialog.setTitle("Delete List");
+                    dialog.setTitle(R.string.delete_list_popup);
 
                     dialog
-                            .setMessage("Are you sure you want to delete the list?")
+                            .setMessage(R.string.delete_list_prompt)
                             .setCancelable(true)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
@@ -135,7 +138,7 @@ public class AddEditListActivity extends AppCompatActivity {
 
     }//end onCreate
 
-    private String changeToString(ArrayList<ItemChoice> listItems) {
+    private String itemsToString(ArrayList<ItemChoice> listItems) {
 
         StringBuilder returnString = new StringBuilder();
 
@@ -164,16 +167,16 @@ public class AddEditListActivity extends AppCompatActivity {
 
         String[] tempList = value.split("\n");
 
-        ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(tempList));
-
-        for(int i = 0 ; i < arrayList.size(); i++){
-
-            //todo: this needs to be changed to take out blank items
-            if(arrayList.get(i).equals("") || arrayList.get(i).equals("\n\n") || arrayList.get(i).length() < 1){
-                arrayList.remove(i);
-            }
-
-        }
+//        ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(tempList));
+//
+//        for(int i = 0 ; i < arrayList.size(); i++){
+//
+//            //todo: this needs to be changed to take out blank items
+//            if(arrayList.get(i).equals("") || arrayList.get(i).equals("\n\n") || arrayList.get(i).length() < 1){
+//                arrayList.remove(i);
+//            }
+//
+//        }
 
         return new ArrayList<>(Arrays.asList(tempList));
     }

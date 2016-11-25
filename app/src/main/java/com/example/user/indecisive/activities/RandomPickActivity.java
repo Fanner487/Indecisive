@@ -4,28 +4,19 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextSwitcher;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ViewSwitcher;
 
 import com.example.user.indecisive.R;
-import com.example.user.indecisive.RandomPick;
+import com.example.user.indecisive.business.RandomPick;
 import com.example.user.indecisive.adapters.RandomPickAdapter;
 import com.example.user.indecisive.business.ItemChoice;
 import com.example.user.indecisive.constants.BundleConstants;
 import com.example.user.indecisive.db.DBManager;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -61,7 +52,7 @@ public class RandomPickActivity extends AppCompatActivity {
         choiceTextView.setInAnimation(in);
         choiceTextView.setOutAnimation(out);
 
-        choiceTextView.setText("Make a choice");
+        choiceTextView.setText(getResources().getString(R.string.make_a_choice));
 
         db = new DBManager(this).open();
         bundle = getIntent().getExtras();

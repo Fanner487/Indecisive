@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.user.indecisive">
 
-    <!-- change the icon -->
     <application
         android:allowBackup="true"
         android:icon="@drawable/app_icon"
@@ -22,7 +21,7 @@
 
         <!--
             meta data and intent allows activities to have back button
-            going back to MainActivity or implements a search
+            going back to MainActivity or implement a search
         -->
         <activity android:name=".activities.SearchActivity">
             <meta-data

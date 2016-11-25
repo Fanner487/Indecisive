@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.user.indecisive.R;
 import com.example.user.indecisive.activities.AddEditListActivity;
@@ -46,7 +45,7 @@ public class PickerDrawerListDisplayAdapter extends BaseListItemAdapter {
             if(convertView == null){
 
                 //can put this is a method. Might be complicated
-                view = inflater.inflate(R.layout.picker_drawer_list_row, null);
+                view = inflater.inflate(R.layout.picker_drawer_fragment_list_row, null);
 
 
             }
@@ -65,7 +64,6 @@ public class PickerDrawerListDisplayAdapter extends BaseListItemAdapter {
             holder.btnEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     MainActivity.startActivityWithBundle(v.getContext(), AddEditListActivity.class,
                             items.get(position).getListName(), items.get(position).getIsDrawer(), true);
 

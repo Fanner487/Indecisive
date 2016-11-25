@@ -1,4 +1,4 @@
-package com.example.user.indecisive;
+package com.example.user.indecisive.business;
 
 import com.example.user.indecisive.business.ItemChoice;
 
@@ -15,7 +15,6 @@ public class RandomPick {
     }
 
     public ItemChoice getRandomFromList(ArrayList<ItemChoice> items){
-
 
         Random rand = new Random();
 

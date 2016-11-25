@@ -21,4 +21,6 @@
     <string name="error_deleting_list">Error deleting list</string>
     <string name="app_search">Search</string>
     <string name="choice">Choice:</string>
+    <string name="delete_list_popup">Delete List</string>
+    <string name="delete_list_prompt">Are you sure you want to delete the list?</string>
 </resources>

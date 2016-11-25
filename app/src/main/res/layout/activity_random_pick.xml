@@ -6,24 +6,8 @@
     android:layout_height="match_parent"
 
     tools:context="com.example.user.indecisive.activities.RandomPickActivity">
-<!--
-    <TextView
-        android:text="@string/make_a_choice"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textAlignment="center"
-        android:background="@color/grey"
-        android:textStyle="bold"
-        android:gravity="center_vertical"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/colorPrimary"
-        android:id="@+id/choiceTextView" />
--->
 
+    <!-- allows animations on TextViews -->
     <TextSwitcher
 
         android:id="@+id/choiceTextView"
@@ -41,8 +25,7 @@
             android:textStyle="bold"
             android:layout_gravity="center"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textColor="@color/white"
-            />
+            android:textColor="@color/white" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -51,8 +34,7 @@
             android:textStyle="bold"
             android:layout_gravity="center"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textColor="@color/white"
-            />
+            android:textColor="@color/white" />
 
    </TextSwitcher>
 
@@ -62,10 +44,10 @@
         android:layout_height="420dp"
         android:layout_below="@id/choiceTextView"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-    />
+        android:layout_alignParentStart="true" />
 
     <Button
+        android:id="@+id/buttonMakeChoice"
         android:text= "@string/pick_from_list"
         android:textSize="@dimen/app_text_size"
         android:layout_width="match_parent"
@@ -74,9 +56,7 @@
         android:layout_below="@id/randomActivityListView"
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimaryDark"
-        android:textColor="@color/white"
-        android:id="@+id/buttonMakeChoice"
-        />
+        android:textColor="@color/white" />
 
 
 </RelativeLayout>
