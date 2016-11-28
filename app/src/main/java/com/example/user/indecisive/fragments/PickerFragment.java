@@ -34,7 +34,7 @@ public class PickerFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public PickerFragment() {
-        // Required empty public constructor
+        //required empty public constructor
     }
 
     @Override

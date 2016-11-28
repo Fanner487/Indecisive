@@ -1,6 +1,8 @@
 package com.example.user.indecisive.business;
 /**
  * Created by Eamon on 10/11/2016.
+ *
+ * Encapsulation for an item in a list
  */
 
 public class ItemChoice {
@@ -10,19 +12,19 @@ public class ItemChoice {
     private int id;
     private String item;
     private String list;
-    private int drawer;
+    private int isDrawer;
 
     public ItemChoice(int id, String item, String list, int drawer) {
         this.id = id;
         this.item = item;
         this.list = list;
-        this.drawer = drawer;
+        this.isDrawer = drawer;
     }
 
     public ItemChoice(String item, String list, int drawer) {
         this.item = item;
         this.list = list;
-        this.drawer = drawer;
+        this.isDrawer = drawer;
     }
 
     public int getId() {
@@ -49,12 +51,12 @@ public class ItemChoice {
         this.list = list;
     }
 
-    public int getDrawer() {
-        return drawer;
+    public int getIsDrawer() {
+        return isDrawer;
     }
 
-    public void setDrawer(int drawer) {
-        this.drawer = drawer;
+    public void setIsDrawer(int isDrawer) {
+        this.isDrawer = isDrawer;
     }
 
     @Override
@@ -63,7 +65,7 @@ public class ItemChoice {
                 "id=" + id +
                 ", item='" + item + '\'' +
                 ", list='" + list + '\'' +
-                ", drawer=" + drawer +
+                ", isDrawer=" + isDrawer +
                 '}';
     }
 }

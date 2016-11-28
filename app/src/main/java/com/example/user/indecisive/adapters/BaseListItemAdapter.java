@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 /**
  * Created by Eamon on 11/11/2016.
+ *
+ * Base Adapter for List type adapters (SearchList/PickerDrawerListDisplay)
  */
 
 public abstract class BaseListItemAdapter extends ArrayAdapter<ListChoice>{

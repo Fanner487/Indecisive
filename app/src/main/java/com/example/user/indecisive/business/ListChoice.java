@@ -2,6 +2,8 @@ package com.example.user.indecisive.business;
 
 /**
  * Created by Eamon on 10/11/2016.
+ *
+ * Encapsulates a list
  */
 
 public class ListChoice {

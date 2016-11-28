@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +46,9 @@ public class SearchListAdapter extends BaseListItemAdapter{
     //can add new item later
     public static class ViewHolder{
         public TextView searchTextView;
+        //todo: change this
         public ImageButton testButton;
+        public ImageView icon;
     }
 
 
@@ -72,6 +76,15 @@ public class SearchListAdapter extends BaseListItemAdapter{
 
             holder.searchTextView = (TextView) view.findViewById(R.id.searchTextView);
             holder.testButton = (ImageButton) view.findViewById(R.id.buttonTest);
+            holder.icon = (ImageView) view.findViewById(R.id.picker_drawer_icon);
+
+            //todo: comment this
+            if(items.get(position).getIsDrawer() == 0){
+                holder.icon.setImageResource(R.drawable.shuffle);
+            }
+            else{
+                holder.icon.setImageResource(R.drawable.magic_hat);
+            }
 
             holder.searchTextView.setText(items.get(position).getListName());
 

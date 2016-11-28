@@ -7,6 +7,8 @@ import java.util.Random;
 
 /**
  * Created by Eamon on 11/11/2016.
+ *
+ * Takes in a list and returns a random value
  */
 
 public class RandomPick {

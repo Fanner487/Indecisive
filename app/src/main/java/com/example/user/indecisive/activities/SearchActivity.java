@@ -2,6 +2,7 @@ package com.example.user.indecisive.activities;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -79,10 +80,44 @@ public class SearchActivity extends AppCompatActivity implements ListenerOperati
         searchView.setIconified(false);
         searchView.setQueryHint(getResources().getString(R.string.app_search));
         searchView.requestFocusFromTouch();
+//        searchView.setQuery();
 
         listenerOperation();
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    public void textChangeOperation(String newText){
+        if(newText != null && !newText.isEmpty()){
+
+            final List<ListChoice> listFound = new ArrayList<>();
+
+            for(ListChoice item:arrayLists){
+
+                //adds list name to new list array if it contains search text
+                if(item.getListName().toLowerCase().contains(newText.toLowerCase())){
+                    listFound.add(item);
+
+                }
+
+                setAdapterAndListener(listFound);
+            }
+
+        }
+        else{
+
+            setAdapterAndListener(arrayLists);
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        setIntent(intent);
+
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            textChangeOperation(query);
+        }
     }
 
     @Override
@@ -97,32 +132,33 @@ public class SearchActivity extends AppCompatActivity implements ListenerOperati
             @Override
             public boolean onQueryTextChange(String newText) {
 
-                if(newText != null && !newText.isEmpty()){
+                textChangeOperation(newText);
 
-                    final List<ListChoice> listFound = new ArrayList<>();
-
-                    for(ListChoice item:arrayLists){
-
-                        //adds list name to new list array if it contains search text
-                        if(item.getListName().toLowerCase().contains(newText.toLowerCase())){
-                            listFound.add(item);
-
-                        }
-
-                        setAdapterAndListener(listFound);
-                    }
-
-                }
-                else{
-
-                    setAdapterAndListener(arrayLists);
-                }
+//                if(newText != null && !newText.isEmpty()){
+//
+//                    final List<ListChoice> listFound = new ArrayList<>();
+//
+//                    for(ListChoice item:arrayLists){
+//
+//                        //adds list name to new list array if it contains search text
+//                        if(item.getListName().toLowerCase().contains(newText.toLowerCase())){
+//                            listFound.add(item);
+//
+//                        }
+//
+//                        setAdapterAndListener(listFound);
+//                    }
+//
+//                }
+//                else{
+//
+//                    setAdapterAndListener(arrayLists);
+//                }
 
                 return false;
             }
         });
     }
-
 
     public void setAdapterAndListener(final List<ListChoice> listItems){
         adapter = new SearchListAdapter(SearchActivity.this,0, (ArrayList<ListChoice>) listItems);

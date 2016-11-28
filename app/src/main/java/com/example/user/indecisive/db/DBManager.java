@@ -5,15 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.example.user.indecisive.business.ItemChoice;
 import com.example.user.indecisive.business.ListChoice;
 import com.example.user.indecisive.constants.ListType;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by Eamon on 06/11/2016.
@@ -193,7 +190,7 @@ public class DBManager {
 
         cv.put(DBManager.KEY_ITEM, item.getItem());
         cv.put(DBManager.KEY_LIST, item.getList());
-        cv.put(DBManager.KEY_DRAWER, item.getDrawer());
+        cv.put(DBManager.KEY_DRAWER, item.getIsDrawer());
 
         return cv;
     }
@@ -204,6 +201,7 @@ public class DBManager {
         ArrayList<ItemChoice> items = new ArrayList<>();
 
         while(c.moveToNext()){
+
             items.add(new ItemChoice(
                     c.getInt(c.getColumnIndexOrThrow(DBManager.KEY_ROWID)),
                     c.getString(c.getColumnIndexOrThrow(DBManager.KEY_ITEM)),

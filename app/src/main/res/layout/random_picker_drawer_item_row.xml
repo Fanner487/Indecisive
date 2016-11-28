@@ -4,7 +4,6 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TextView
-        android:textSize="@dimen/app_text_size"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/app_row_height"
         android:layout_alignParentTop="true"
@@ -14,7 +13,7 @@
         android:layout_marginLeft="@dimen/row_margin_left_start"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
         android:gravity="center_vertical"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/colorPrimaryDark"
         android:id="@+id/tvChoiceItem" />
 
 </RelativeLayout>

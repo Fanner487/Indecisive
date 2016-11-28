@@ -2,6 +2,8 @@ package com.example.user.indecisive.adapters;
 
 /**
  * Created by Eamon on 06/11/2016.
+ *
+ * Adapter for tab layout
  */
 
 import android.support.v4.app.Fragment;

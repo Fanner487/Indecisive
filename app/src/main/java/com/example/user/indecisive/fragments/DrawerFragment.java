@@ -32,7 +32,7 @@ public class DrawerFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public DrawerFragment() {
-        // Required empty public constructor
+        //required empty public constructor
     }
 
     @Override

@@ -9,7 +9,7 @@
     <string name="app_label">Search</string>
     <string name="search_hint">Search Hint</string>
     <string name="list_name">List Name</string>
-    <string name="enter_values_separated_by_return">Enter values (separated by return)</string>
+    <string name="enter_values_separated_by_return">Enter values (separated by return key)</string>
     <string name="is_drawer_list">Is Drawer List</string>
     <string name="delete_list">Delete List</string>
     <string name="update_list">Update List</string>
