@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     //called by any class that needs to create a new Intent
-    //TODO: put this in a separate class?
     public static void startActivityWithBundle(Context context, Class activity, String list, int isDrawer, boolean isEditList){
 
         Intent i = new Intent(context, activity);

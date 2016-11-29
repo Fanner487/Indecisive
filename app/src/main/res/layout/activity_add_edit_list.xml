@@ -91,4 +91,5 @@
         android:textSize="@dimen/app_text_size"
         android:layout_marginBottom="5dp"
         android:background="@color/colorPrimaryDark"/>
+
 </RelativeLayout>

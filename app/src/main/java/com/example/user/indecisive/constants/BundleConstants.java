@@ -2,6 +2,8 @@ package com.example.user.indecisive.constants;
 
 /**
  * Created by Eamon on 17/11/2016.
+ *
+ * Constants for extra values inside a bundle
  */
 
 public class BundleConstants {

@@ -20,17 +20,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /*
-* Add a new list or update and existing one
+
+*   Add a new list or update and existing one
 *
 * */
 public class AddEditListActivity extends AppCompatActivity implements ListenerOperation{
 
-//    todo: change the toast mechanism for update or create list
     final String TAG = AddEditListActivity.class.getSimpleName();
 
-    Button addEditListButton;
-    Button deleteListButton;
-    Switch drawerSwitch;
+    Button btnAddEditList;
+    Button btnDeleteList;
+    Switch swDrawer;
     EditText etListName;
     EditText etListItems;
 
@@ -43,9 +43,9 @@ public class AddEditListActivity extends AppCompatActivity implements ListenerOp
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_list);
 
-        addEditListButton = (Button) findViewById(R.id.activity_add_edit_list_btn_add);
-        deleteListButton = (Button) findViewById(R.id.activity_add_edit_list_btn_delete);
-        drawerSwitch = (Switch) findViewById(R.id.activity_add_edit_list_switch_drawer);
+        btnAddEditList = (Button) findViewById(R.id.activity_add_edit_list_btn_add);
+        btnDeleteList = (Button) findViewById(R.id.activity_add_edit_list_btn_delete);
+        swDrawer = (Switch) findViewById(R.id.activity_add_edit_list_switch_drawer);
         etListName = (EditText) findViewById(R.id.activity_add_edit_list_et_list_name);
         etListItems = (EditText) findViewById(R.id.activity_add_edit_list_et_list_items);
 
@@ -53,7 +53,7 @@ public class AddEditListActivity extends AppCompatActivity implements ListenerOp
         bundle = getIntent().getExtras();
 
         //hides button when in add list mode
-        deleteListButton.setVisibility(View.GONE);
+        btnDeleteList.setVisibility(View.GONE);
 
         listenerOperation();
 
@@ -98,7 +98,7 @@ public class AddEditListActivity extends AppCompatActivity implements ListenerOp
             ArrayList<String> listOfItems = toList(etListItems.getText().toString());
             int isDrawer;
 
-            if(drawerSwitch.isChecked()){
+            if(swDrawer.isChecked()){
                 isDrawer = 1;
             }
             else{
@@ -147,10 +147,10 @@ public class AddEditListActivity extends AppCompatActivity implements ListenerOp
             etListName.setText(bundle.getString(BundleConstants.LIST_NAME));
 
             if(bundle.getInt(BundleConstants.IS_DRAWER) == 0){
-                drawerSwitch.setChecked(false);
+                swDrawer.setChecked(false);
             }
             else{
-                drawerSwitch.setChecked(true);
+                swDrawer.setChecked(true);
             }
 
 
@@ -158,8 +158,8 @@ public class AddEditListActivity extends AppCompatActivity implements ListenerOp
 
             etListItems.setText(listItemsString);
 
-            addEditListButton.setText(R.string.update_list);
-            deleteListButton.setVisibility(View.VISIBLE);
+            btnAddEditList.setText(R.string.update_list);
+            btnDeleteList.setVisibility(View.VISIBLE);
 
             deleteListOperation();
 
@@ -171,7 +171,7 @@ public class AddEditListActivity extends AppCompatActivity implements ListenerOp
 
     private void addOrEditListOperation() {
 
-        addEditListButton.setOnClickListener(new View.OnClickListener() {
+        btnAddEditList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -196,7 +196,7 @@ public class AddEditListActivity extends AppCompatActivity implements ListenerOp
     private void deleteListOperation() {
 
         //prompts user if they want to delete list
-        deleteListButton.setOnClickListener(new View.OnClickListener() {
+        btnDeleteList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

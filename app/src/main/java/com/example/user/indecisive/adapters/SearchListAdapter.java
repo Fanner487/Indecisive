@@ -35,7 +35,6 @@ public class SearchListAdapter extends BaseListItemAdapter{
     //can add new item later
     public static class ViewHolder{
         public TextView searchTextView;
-        //todo: change this
         public ImageButton editButton;
         public ImageView icon;
     }

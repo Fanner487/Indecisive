@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 /**
  * Created by Eamon on 11/11/2016.
+ *
+ * Adapter for RandomPick Activity
  */
 
 public class RandomPickAdapter extends ArrayAdapter<ItemChoice>{
@@ -81,8 +83,6 @@ public class RandomPickAdapter extends ArrayAdapter<ItemChoice>{
         catch (Exception e){
             e.printStackTrace();
         }
-
-
 
         return row;
     }

@@ -21,13 +21,19 @@ import com.example.user.indecisive.interfaces.ListenerOperation;
 
 import java.util.ArrayList;
 
+/*
+*
+* Picks random from list or draws "out of hat" from list
+*
+* */
+
 public class RandomPickActivity extends AppCompatActivity implements ListenerOperation {
 
     final String TAG = RandomPickActivity.class.getSimpleName();
 
     ListView listView;
-    Button buttonMakeChoice;
-    TextSwitcher choiceTextView = null;
+    Button btnMakeChoice;
+    TextSwitcher tvChoice = null;
     ArrayList<ItemChoice> items = null;
     RandomPickAdapter adapter;
     String listName;
@@ -45,8 +51,8 @@ public class RandomPickActivity extends AppCompatActivity implements ListenerOpe
         setContentView(R.layout.activity_random_pick);
 
         listView = (ListView) findViewById(R.id.activity_random_pick_list_view);
-        buttonMakeChoice = (Button) findViewById(R.id.activity_random_pick_btn_make_choice);
-        choiceTextView = (TextSwitcher) findViewById(R.id.activity_random_pick_tv_choice);
+        btnMakeChoice = (Button) findViewById(R.id.activity_random_pick_btn_make_choice);
+        tvChoice = (TextSwitcher) findViewById(R.id.activity_random_pick_tv_choice);
 
         bundle = getIntent().getExtras();
         db = new DBManager(this).open();
@@ -55,10 +61,10 @@ public class RandomPickActivity extends AppCompatActivity implements ListenerOpe
         in = AnimationUtils.loadAnimation(this, R.anim.slide_in_left_fast);
         out = AnimationUtils.loadAnimation(this, R.anim.slide_out_right_fast);
 
-        choiceTextView.setInAnimation(in);
-        choiceTextView.setOutAnimation(out);
+        tvChoice.setInAnimation(in);
+        tvChoice.setOutAnimation(out);
 
-        choiceTextView.setText(getResources().getString(R.string.make_a_choice));
+        tvChoice.setText(getResources().getString(R.string.make_a_choice));
 
         listName = bundle.getString(BundleConstants.LIST_NAME);
 
@@ -76,14 +82,14 @@ public class RandomPickActivity extends AppCompatActivity implements ListenerOpe
     @Override
     public void listenerOperation() {
 
-        buttonMakeChoice.setOnClickListener(new View.OnClickListener() {
+        btnMakeChoice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 //picker list operation
                 if(bundle.getInt(BundleConstants.IS_DRAWER) == 0){
 
-                    choiceTextView.setText(getRandomFromList(items).getItem());
+                    tvChoice.setText(getRandomFromList(items).getItem());
                 }
                 //drawer list operation
                 else{
@@ -93,7 +99,7 @@ public class RandomPickActivity extends AppCompatActivity implements ListenerOpe
                     if(items.size() > 0){
 
                         ItemChoice randomChoice = getRandomFromList(items);
-                        choiceTextView.setText(randomChoice.getItem());
+                        tvChoice.setText(randomChoice.getItem());
 
                         items.remove(randomChoice);
 
@@ -115,7 +121,7 @@ public class RandomPickActivity extends AppCompatActivity implements ListenerOpe
                                     public void onClick(DialogInterface dialog, int which) {
 
                                         setAdapterAndListener(db.getItemsFromList(listName));
-                                        choiceTextView.setText(getResources().getString(R.string.make_a_choice));
+                                        tvChoice.setText(getResources().getString(R.string.make_a_choice));
 
                                     }
                                 })

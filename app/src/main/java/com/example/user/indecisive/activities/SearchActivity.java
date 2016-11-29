@@ -22,6 +22,10 @@ import com.example.user.indecisive.interfaces.ListenerOperation;
 
 import java.util.ArrayList;
 import java.util.List;
+/*
+*
+*   User makes search for a list
+* */
 
 public class SearchActivity extends AppCompatActivity implements ListenerOperation{
 
@@ -75,14 +79,14 @@ public class SearchActivity extends AppCompatActivity implements ListenerOperati
         searchView.setIconified(false);
         searchView.setQueryHint(getResources().getString(R.string.app_search));
         searchView.requestFocusFromTouch();
-//        searchView.setQuery();
-
         listenerOperation();
 
         return super.onCreateOptionsMenu(menu);
     }
 
+    //changes list and sets new adapter when query changed
     public void textChangeOperation(String newText){
+
         if(newText != null && !newText.isEmpty()){
 
             final List<ListChoice> listFound = new ArrayList<>();
@@ -102,16 +106,6 @@ public class SearchActivity extends AppCompatActivity implements ListenerOperati
         else{
 
             setAdapterAndListener(arrayLists);
-        }
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        setIntent(intent);
-
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            textChangeOperation(query);
         }
     }
 

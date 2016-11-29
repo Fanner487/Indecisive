@@ -185,8 +185,6 @@ public class DBManager {
                 new String[]{listName});
     }
 
-//    public long updateList(String)
-
     //puts item attributes to ContentValues
     public ContentValues toContentValues(ItemChoice item){
 

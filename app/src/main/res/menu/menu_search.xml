@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app = "http://schemas.android.com/apk/res-auto">
 
+    <!-- search view for SearchActivity -->
     <item
         android:id="@+id/menuSearch"
         android:title="@string/app_search"
@@ -9,9 +10,6 @@
         android:focusableInTouchMode = "true"
         android:iconifiedByDefault = "true"
         app:actionViewClass = "android.widget.SearchView"
-        app:showAsAction="always"
-
-        />
-
+        app:showAsAction="always" />
 
 </menu>
