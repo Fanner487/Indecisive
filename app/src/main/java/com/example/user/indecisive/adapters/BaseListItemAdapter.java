@@ -25,8 +25,8 @@ public abstract class BaseListItemAdapter extends ArrayAdapter<ListChoice>{
     protected ArrayList<ListChoice> items;
     protected LayoutInflater inflater = null;
 
-    public BaseListItemAdapter(Context context, int resource, ArrayList<ListChoice> objects) {
-        super(context, resource, objects);
+    public BaseListItemAdapter(Context context, ArrayList<ListChoice> objects) {
+        super(context, 0, objects);
 
         try{
             this.context = context;

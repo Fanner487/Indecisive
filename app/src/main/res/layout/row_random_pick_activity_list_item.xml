@@ -13,7 +13,7 @@
         android:layout_marginLeft="@dimen/row_margin_left_start"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
         android:gravity="center_vertical"
-        android:textColor="@color/colorPrimaryDark"
-        android:id="@+id/tvChoiceItem" />
+        android:textColor="@color/app_font_colour"
+        android:id="@+id/adapter_random_pick_tv_choice" />
 
 </RelativeLayout>

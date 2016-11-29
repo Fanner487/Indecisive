@@ -1,19 +1,16 @@
 package com.example.user.indecisive.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.user.indecisive.R;
 import com.example.user.indecisive.activities.MainActivity;
-import com.example.user.indecisive.activities.RandomPickActivity;
 import com.example.user.indecisive.adapters.PickerDrawerListDisplayAdapter;
 import com.example.user.indecisive.business.ListChoice;
 import com.example.user.indecisive.constants.ListType;
@@ -43,7 +40,7 @@ public class PickerFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_picker, container, false);
 
-        listView = (ListView) view.findViewById(R.id.pickerListView);
+        listView = (ListView) view.findViewById(R.id.fragment_picker_list_view);
         db = new DBManager(getContext()).open();
 
         pickerList = db.getListsOfType(ListType.PICKER_LIST);
@@ -57,7 +54,7 @@ public class PickerFragment extends Fragment {
     public void onResume() {
         pickerList = db.getListsOfType(ListType.PICKER_LIST);
 
-        PickerDrawerListDisplayAdapter adapter = new PickerDrawerListDisplayAdapter(getContext(), 0, pickerList);
+        PickerDrawerListDisplayAdapter adapter = new PickerDrawerListDisplayAdapter(getContext(), pickerList);
         listView.setAdapter(adapter);
 
         super.onResume();

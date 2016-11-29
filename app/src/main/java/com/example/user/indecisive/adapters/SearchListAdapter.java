@@ -1,45 +1,34 @@
 package com.example.user.indecisive.adapters;
 
-import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.media.Image;
 import android.support.annotation.NonNull;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.user.indecisive.R;
 import com.example.user.indecisive.activities.AddEditListActivity;
 import com.example.user.indecisive.activities.MainActivity;
-import com.example.user.indecisive.activities.RandomPickActivity;
-import com.example.user.indecisive.business.ItemChoice;
 import com.example.user.indecisive.business.ListChoice;
 
 import java.util.ArrayList;
 
 /**
  * Created by Eamon on 10/11/2016.
+ *
+ * Adapter for search view list
  */
 
 public class SearchListAdapter extends BaseListItemAdapter{
 
     final String TAG = SearchListAdapter.class.getSimpleName();
 
-    //Todo: put icon for drawer or picker
-
     View view;
     //changed the list parameter
-    public SearchListAdapter(Context context, int resource, ArrayList<ListChoice> objects) {
-        super(context, resource, objects);
+    public SearchListAdapter(Context context, ArrayList<ListChoice> objects) {
+        super(context, objects);
 
     }
 
@@ -47,7 +36,7 @@ public class SearchListAdapter extends BaseListItemAdapter{
     public static class ViewHolder{
         public TextView searchTextView;
         //todo: change this
-        public ImageButton testButton;
+        public ImageButton editButton;
         public ImageView icon;
     }
 
@@ -63,8 +52,7 @@ public class SearchListAdapter extends BaseListItemAdapter{
 
             if(convertView == null){
 
-                view = inflater.inflate(R.layout.search_activity_list_row, null);
-
+                view = inflater.inflate(R.layout.row_search_activity_list_view, null);
 
             }
             else{
@@ -74,11 +62,11 @@ public class SearchListAdapter extends BaseListItemAdapter{
 
             holder = new ViewHolder();
 
-            holder.searchTextView = (TextView) view.findViewById(R.id.searchTextView);
-            holder.testButton = (ImageButton) view.findViewById(R.id.buttonTest);
-            holder.icon = (ImageView) view.findViewById(R.id.picker_drawer_icon);
+            holder.searchTextView = (TextView) view.findViewById(R.id.adapter_search_list_tv_search);
+            holder.editButton = (ImageButton) view.findViewById(R.id.adapter_search_list_btn_edit);
+            holder.icon = (ImageView) view.findViewById(R.id.adapter_search_list_image_icon);
 
-            //todo: comment this
+            //set icon depending on list type
             if(items.get(position).getIsDrawer() == 0){
                 holder.icon.setImageResource(R.drawable.shuffle);
             }
@@ -88,7 +76,7 @@ public class SearchListAdapter extends BaseListItemAdapter{
 
             holder.searchTextView.setText(items.get(position).getListName());
 
-            holder.testButton.setOnClickListener(new View.OnClickListener() {
+            holder.editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 

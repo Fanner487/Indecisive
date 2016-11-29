@@ -25,11 +25,9 @@ public class RandomPickAdapter extends ArrayAdapter<ItemChoice>{
     private ArrayList<ItemChoice> items;
     private static LayoutInflater inflater = null;
 
-    public RandomPickAdapter(Context context, int resource, ArrayList<ItemChoice> objects) {
-        super(context, resource, objects);
+    public RandomPickAdapter(Context context, ArrayList<ItemChoice> objects) {
+        super(context, 0, objects);
 
-
-        //do i need this???
         try{
             this.context = context;
             this.items = objects;
@@ -39,7 +37,6 @@ public class RandomPickAdapter extends ArrayAdapter<ItemChoice>{
             e.printStackTrace();
         }
     }
-
 
     //can add new item later
     public static class ViewHolder{
@@ -69,7 +66,7 @@ public class RandomPickAdapter extends ArrayAdapter<ItemChoice>{
 
             if(convertView == null){
 
-                row = inflater.inflate(R.layout.random_picker_drawer_item_row, null);
+                row = inflater.inflate(R.layout.row_random_pick_activity_list_item, null);
 
             }
             else{
@@ -77,7 +74,7 @@ public class RandomPickAdapter extends ArrayAdapter<ItemChoice>{
             }
 
             holder = new ViewHolder();
-            holder.tvItemChoice = (TextView) row.findViewById(R.id.tvChoiceItem);
+            holder.tvItemChoice = (TextView) row.findViewById(R.id.adapter_random_pick_tv_choice);
             holder.tvItemChoice.setText(items.get(position).getItem());
 
         }

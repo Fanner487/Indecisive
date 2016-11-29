@@ -44,9 +44,9 @@ public class RandomPickActivity extends AppCompatActivity implements ListenerOpe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_random_pick);
 
-        listView = (ListView) findViewById(R.id.randomActivityListView);
-        buttonMakeChoice = (Button) findViewById(R.id.buttonMakeChoice);
-        choiceTextView = (TextSwitcher) findViewById(R.id.choiceTextView);
+        listView = (ListView) findViewById(R.id.activity_random_pick_list_view);
+        buttonMakeChoice = (Button) findViewById(R.id.activity_random_pick_btn_make_choice);
+        choiceTextView = (TextSwitcher) findViewById(R.id.activity_random_pick_tv_choice);
 
         bundle = getIntent().getExtras();
         db = new DBManager(this).open();
@@ -65,7 +65,7 @@ public class RandomPickActivity extends AppCompatActivity implements ListenerOpe
         //sets title of activity to list name
         setTitle(listName);
 
-        items = db.getListItems(listName);
+        items = db.getItemsFromList(listName);
 
         setAdapterAndListener(items);
 
@@ -114,7 +114,7 @@ public class RandomPickActivity extends AppCompatActivity implements ListenerOpe
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
-                                        setAdapterAndListener(db.getListItems(listName));
+                                        setAdapterAndListener(db.getItemsFromList(listName));
                                         choiceTextView.setText(getResources().getString(R.string.make_a_choice));
 
                                     }
@@ -140,7 +140,7 @@ public class RandomPickActivity extends AppCompatActivity implements ListenerOpe
 
     private void setAdapterAndListener(ArrayList<ItemChoice> listItems){
         items = listItems;
-        adapter = new RandomPickAdapter(this, 0, listItems);
+        adapter = new RandomPickAdapter(this, listItems);
         listView.setAdapter(adapter);
 
     }

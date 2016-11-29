@@ -10,5 +10,5 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/pickerListView"/>
+        android:id="@+id/fragment_picker_list_view"/>
 </RelativeLayout>

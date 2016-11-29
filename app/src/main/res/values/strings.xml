@@ -28,4 +28,7 @@
     <string name="reload_list">Would you like to reload the list?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="list_exists">List already exists</string>
+    <string name="list_updated">List Updated</string>
+    <string name="list_created">List Created</string>
 </resources>

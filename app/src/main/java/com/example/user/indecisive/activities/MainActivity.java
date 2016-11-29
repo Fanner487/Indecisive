@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements
 
     //used by drawer/picker fragment to set listeners
     public static void setListAdapterAndListener(final Context context, ListView listView, final ArrayList<ListChoice> lists){
-        PickerDrawerListDisplayAdapter adapter = new PickerDrawerListDisplayAdapter(context, 0, lists);
+        PickerDrawerListDisplayAdapter adapter = new PickerDrawerListDisplayAdapter(context, lists);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

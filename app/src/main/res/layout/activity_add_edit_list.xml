@@ -12,24 +12,26 @@
         android:text="@string/is_drawer_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etListName"
+        android:layout_below="@+id/activity_add_edit_list_et_list_name"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginStart="@dimen/add_edit_list_start_margin"
+        android:layout_marginLeft="@dimen/add_edit_list_start_margin"
         android:layout_marginTop="20dp"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/app_font_colour"
         android:id="@+id/tvIsDrawerList" />
 
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/drawerSwitch"
+        android:id="@+id/activity_add_edit_list_switch_drawer"
         android:layout_alignBaseline="@+id/tvIsDrawerList"
         android:layout_alignBottom="@+id/tvIsDrawerList"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/add_edit_list_start_margin"
+        android:layout_marginRight="@dimen/add_edit_list_start_margin"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -37,16 +39,18 @@
         android:inputType="textPersonName"
         android:hint="@string/list_name"
         android:ems="10"
-        android:textColorHint="@color/colorPrimaryDark"
-        android:id="@+id/etListName"
+        android:textColor="@color/app_font_colour"
+        android:id="@+id/activity_add_edit_list_et_list_name"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="@dimen/add_edit_list_start_margin"
+        android:layout_marginRight="@dimen/add_edit_list_start_margin"/>
 
     <Button
-        android:id="@+id/buttonAddEditList"
+        android:id="@+id/activity_add_edit_list_btn_add"
         android:text="@string/create_list"
         android:textSize="@dimen/app_text_size"
         android:layout_width="match_parent"
@@ -64,25 +68,27 @@
         android:hint="@string/enter_values_separated_by_return"
         android:ems="10"
         android:gravity="top"
-        android:id="@+id/etListItems"
-        android:textColorHint="@color/colorPrimaryDark"
+        android:id="@+id/activity_add_edit_list_et_list_items"
+        android:textColor="@color/app_font_colour"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="30dp"
-        android:layout_below="@+id/drawerSwitch"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/activity_add_edit_list_switch_drawer"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="@dimen/add_edit_list_start_margin"
+        android:layout_marginRight="@dimen/add_edit_list_start_margin"/>
 
     <Button
-        android:text="@string/delete_list"
-        android:textSize="@dimen/app_text_size"
+        android:id="@+id/activity_add_edit_list_btn_delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonAddEditList"
+        android:layout_above="@+id/activity_add_edit_list_btn_add"
         android:layout_centerHorizontal="true"
-        android:id="@+id/buttonDeleteList"
         android:textColor="@color/white"
         android:textAllCaps="false"
+        android:text="@string/delete_list"
+        android:textSize="@dimen/app_text_size"
         android:layout_marginBottom="5dp"
         android:background="@color/colorPrimaryDark"/>
 </RelativeLayout>

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:descendantFocusability="blocksDescendants"
     >
-
+    <!--android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="@dimen/app_row_height"
@@ -14,21 +14,21 @@
         android:layout_alignParentStart="true"
         android:gravity="center_vertical"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/app_font_colour"
         android:layout_marginStart="@dimen/row_margin_left_start"
         android:layout_marginLeft="@dimen/row_margin_left_start"
-        android:id="@+id/pickerDrawerListName" />
+        android:id="@+id/adapter_picker_drawer_list_display_tv_list_name" />
 
     <ImageButton
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/button_size"
+        android:layout_height="@dimen/button_size"
         app:srcCompat="@mipmap/edit_button"
-        android:background="@android:color/transparent"
+        android:background="@drawable/rounded_corner"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="20dp"
         android:layout_marginEnd="20dp"
-        android:id="@+id/btnEdit"
+        android:id="@+id/adapter_picker_drawer_list_display_btn_edit"
         android:layout_centerVertical="true"/>
 
 </RelativeLayout>

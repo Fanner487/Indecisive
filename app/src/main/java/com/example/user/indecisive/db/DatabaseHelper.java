@@ -7,6 +7,8 @@ import android.util.Log;
 
 /**
  * Created by Eamon on 10/11/2016.
+ *
+ * Creates and updates database
  */
 
 public class DatabaseHelper extends SQLiteOpenHelper {

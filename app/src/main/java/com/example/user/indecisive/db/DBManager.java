@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 /**
  * Created by Eamon on 06/11/2016.
+ *
+ * Database operations
  */
 
 public class DBManager {
@@ -117,7 +119,7 @@ public class DBManager {
     }
 
     //get values from list
-    public ArrayList<ItemChoice> getListItems(String listName){
+    public ArrayList<ItemChoice> getItemsFromList(String listName){
 
         Cursor c = db.query(DATABASE_TABLE, new String[] {
                         KEY_ROWID,
@@ -182,6 +184,8 @@ public class DBManager {
                 KEY_LIST + " = ?",
                 new String[]{listName});
     }
+
+//    public long updateList(String)
 
     //puts item attributes to ContentValues
     public ContentValues toContentValues(ItemChoice item){

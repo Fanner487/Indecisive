@@ -7,12 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.user.indecisive.R;
 import com.example.user.indecisive.activities.MainActivity;
-import com.example.user.indecisive.activities.RandomPickActivity;
 import com.example.user.indecisive.adapters.PickerDrawerListDisplayAdapter;
 import com.example.user.indecisive.business.ListChoice;
 import com.example.user.indecisive.constants.ListType;
@@ -45,7 +43,7 @@ public class DrawerFragment extends Fragment {
 
         drawerList = db.getListsOfType(ListType.DRAWER_LIST);
 
-        listView = (ListView) view.findViewById(R.id.drawerListView);
+        listView = (ListView) view.findViewById(R.id.fragment_drawer_list_view);
 
         MainActivity.setListAdapterAndListener(getActivity(), listView, drawerList);
 
@@ -56,7 +54,7 @@ public class DrawerFragment extends Fragment {
     public void onResume() {
         drawerList = db.getListsOfType(ListType.DRAWER_LIST);
 
-        PickerDrawerListDisplayAdapter adapter = new PickerDrawerListDisplayAdapter(getContext(), 1, drawerList);
+        PickerDrawerListDisplayAdapter adapter = new PickerDrawerListDisplayAdapter(getContext(), drawerList);
         listView.setAdapter(adapter);
 
         super.onResume();

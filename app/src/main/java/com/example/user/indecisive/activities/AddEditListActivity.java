@@ -39,13 +39,25 @@ public class AddEditListActivity extends AppCompatActivity implements ListenerOp
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_list);
 
-        setupVariables();
+        addEditListButton = (Button) findViewById(R.id.activity_add_edit_list_btn_add);
+        deleteListButton = (Button) findViewById(R.id.activity_add_edit_list_btn_delete);
+        drawerSwitch = (Switch) findViewById(R.id.activity_add_edit_list_switch_drawer);
+        etListName = (EditText) findViewById(R.id.activity_add_edit_list_et_list_name);
+        etListItems = (EditText) findViewById(R.id.activity_add_edit_list_et_list_items);
+
+        db = new DBManager(this).open();
+        bundle = getIntent().getExtras();
+
+        //hides button when in add list mode
+        deleteListButton.setVisibility(View.GONE);
+
         listenerOperation();
 
-    }//end onCreate
+    }
 
     private String itemsToString(ArrayList<ItemChoice> listItems) {
 
@@ -63,20 +75,6 @@ public class AddEditListActivity extends AppCompatActivity implements ListenerOp
         }
 
         return returnString.toString();
-    }
-
-    private void clearFields() {
-
-        etListName.setText("");
-        etListItems.setText("");
-    }
-
-    //converts long string and converts them to ItemChoice objects
-    public ArrayList<String> toList(String value){
-
-        String[] tempList = value.split("\n");
-
-        return new ArrayList<>(Arrays.asList(tempList));
     }
 
     //checks if list name and values field null
@@ -107,29 +105,29 @@ public class AddEditListActivity extends AppCompatActivity implements ListenerOp
                 isDrawer = 0;
             }
 
-
             if(db.insertList(listName, listOfItems, isDrawer)){
 
-                if(bundle.getBoolean(bundle.getString(BundleConstants.IS_EDIT_LIST))){
+                //toasts if list has been updated or created
+                if(bundle.getBoolean(BundleConstants.IS_EDIT_LIST)){
 
-                    Toast.makeText(AddEditListActivity.this, "List Updated", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddEditListActivity.this, R.string.list_updated, Toast.LENGTH_SHORT).show();
                 }
                 else{
 
-                    Toast.makeText(AddEditListActivity.this, "List Created", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddEditListActivity.this, R.string.list_created, Toast.LENGTH_SHORT).show();
+
                 }
 
 
                 MainActivity.startActivityWithBundle(AddEditListActivity.this, RandomPickActivity.class,
                         listName, isDrawer, false);
 
-                clearFields();
                 finish();
 
             }
             else{
 
-                Toast.makeText(AddEditListActivity.this, R.string.error_list_insert, Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddEditListActivity.this, R.string.list_exists, Toast.LENGTH_SHORT).show();
             }
 
         }//end allFieldsFilled
@@ -137,7 +135,7 @@ public class AddEditListActivity extends AppCompatActivity implements ListenerOp
 
             Toast.makeText(AddEditListActivity.this, R.string.fill_all_fields, Toast.LENGTH_SHORT).show();
         }
-    }
+    }//end createListAndStartActivity
 
     @Override
     public void listenerOperation() {
@@ -156,63 +154,28 @@ public class AddEditListActivity extends AppCompatActivity implements ListenerOp
             }
 
 
-            String listItemsString = itemsToString(db.getListItems(bundle.getString(BundleConstants.LIST_NAME)));
+            String listItemsString = itemsToString(db.getItemsFromList(bundle.getString(BundleConstants.LIST_NAME)));
 
             etListItems.setText(listItemsString);
 
             addEditListButton.setText(R.string.update_list);
             deleteListButton.setVisibility(View.VISIBLE);
 
-            //todo: make this look pretty
-            //prompts user if they want to delete list
-            deleteListButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(AddEditListActivity.this);
-
-                    dialog.setTitle(R.string.delete_list_popup);
-
-                    dialog
-                            .setMessage(R.string.delete_list_prompt)
-                            .setCancelable(true)
-                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                    //delete list
-                                    if(db.deleteList(bundle.getString(BundleConstants.LIST_NAME)) != -1){
-
-                                        Toast.makeText(AddEditListActivity.this, getResources().getString(R.string.deleted) + " " + bundle.get(BundleConstants.LIST_NAME), Toast.LENGTH_SHORT).show();
-                                        finish();
-                                    }
-                                    else{
-
-                                        Toast.makeText(AddEditListActivity.this, getResources().getString(R.string.error_deleting_list), Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            })
-                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.cancel();
-                                }
-                            });
-
-                    AlertDialog alertDialog = dialog.create();
-
-                    alertDialog.show();
-
-                }
-            });//end button listener
+            deleteListOperation();
 
         }//end if IS_EDIT_LIST
 
+        addOrEditListOperation();
+
+    }
+
+    private void addOrEditListOperation() {
 
         addEditListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                //if update version of activity, delete list and create it again
                 if(bundle.getBoolean(BundleConstants.IS_EDIT_LIST)){
 
                     if(db.deleteList(bundle.getString(BundleConstants.LIST_NAME)) != -1){
@@ -229,18 +192,60 @@ public class AddEditListActivity extends AppCompatActivity implements ListenerOp
         });
     }
 
-    private void setupVariables() {
-        addEditListButton = (Button) findViewById(R.id.buttonAddEditList);
-        deleteListButton = (Button) findViewById(R.id.buttonDeleteList);
-        drawerSwitch = (Switch) findViewById(R.id.drawerSwitch);
-        etListName = (EditText) findViewById(R.id.etListName);
-        etListItems = (EditText) findViewById(R.id.etListItems);
 
-        db = new DBManager(this).open();
-        bundle = getIntent().getExtras();
+    private void deleteListOperation() {
 
-        //hides button when in add list mode
-        deleteListButton.setVisibility(View.GONE);
+        //prompts user if they want to delete list
+        deleteListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder dialog = new AlertDialog.Builder(AddEditListActivity.this);
+
+                dialog.setTitle(R.string.delete_list_popup);
+
+                dialog
+                        .setMessage(R.string.delete_list_prompt)
+                        .setCancelable(true)
+                        .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                //delete list
+                                if(db.deleteList(bundle.getString(BundleConstants.LIST_NAME)) != -1){
+
+                                    Toast.makeText(AddEditListActivity.this, getResources().getString(R.string.deleted) + " " + bundle.get(BundleConstants.LIST_NAME), Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                                else{
+
+                                    Toast.makeText(AddEditListActivity.this, getResources().getString(R.string.error_deleting_list), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        })
+                        .setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alertDialog = dialog.create();
+
+                alertDialog.show();
+
+            }
+        });//end button listener
+
+    }//end delete list operation
+
+
+    //converts long string and converts them to ItemChoice objects
+    public ArrayList<String> toList(String value){
+
+        String[] tempList = value.split("\n");
+
+        return new ArrayList<>(Arrays.asList(tempList));
     }
 
 }

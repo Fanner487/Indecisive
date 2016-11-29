@@ -5,20 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.example.user.indecisive.R;
 import com.example.user.indecisive.adapters.SearchListAdapter;
@@ -42,11 +36,12 @@ public class SearchActivity extends AppCompatActivity implements ListenerOperati
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
         db = new DBManager(this).open();
-        listView = (ListView) findViewById(R.id.searchListView);
+        listView = (ListView) findViewById(R.id.activity_search_list_view);
 
         arrayLists = db.getListNames();
 
@@ -134,34 +129,14 @@ public class SearchActivity extends AppCompatActivity implements ListenerOperati
 
                 textChangeOperation(newText);
 
-//                if(newText != null && !newText.isEmpty()){
-//
-//                    final List<ListChoice> listFound = new ArrayList<>();
-//
-//                    for(ListChoice item:arrayLists){
-//
-//                        //adds list name to new list array if it contains search text
-//                        if(item.getListName().toLowerCase().contains(newText.toLowerCase())){
-//                            listFound.add(item);
-//
-//                        }
-//
-//                        setAdapterAndListener(listFound);
-//                    }
-//
-//                }
-//                else{
-//
-//                    setAdapterAndListener(arrayLists);
-//                }
-
                 return false;
             }
         });
     }
 
     public void setAdapterAndListener(final List<ListChoice> listItems){
-        adapter = new SearchListAdapter(SearchActivity.this,0, (ArrayList<ListChoice>) listItems);
+
+        adapter = new SearchListAdapter(SearchActivity.this, (ArrayList<ListChoice>) listItems);
 
         listView.setAdapter(adapter);
 

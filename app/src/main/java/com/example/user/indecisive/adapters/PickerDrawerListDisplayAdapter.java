@@ -18,15 +18,15 @@ import java.util.ArrayList;
 /**
  * Created by Eamon on 10/11/2016.
  *
- * inherits
+ * Adapter for Picker/Drawer fragments list view
  */
 
 public class PickerDrawerListDisplayAdapter extends BaseListItemAdapter {
 
     final String TAG = PickerDrawerListDisplayAdapter.class.getSimpleName();
 
-    public PickerDrawerListDisplayAdapter(Context context, int resource, ArrayList<ListChoice> objects) {
-        super(context, resource, objects);
+    public PickerDrawerListDisplayAdapter(Context context, ArrayList<ListChoice> objects) {
+        super(context, objects);
 
     }
 
@@ -46,20 +46,17 @@ public class PickerDrawerListDisplayAdapter extends BaseListItemAdapter {
 
             if(convertView == null){
 
-                //can put this is a method. Might be complicated
-                view = inflater.inflate(R.layout.picker_drawer_fragment_list_row, null);
-
+                view = inflater.inflate(R.layout.row_picker_drawer_fragment_list_view, null);
 
             }
             else{
                 view = convertView;
             }
 
-
             holder = new ViewHolder();
 
-            holder.tvListName = (TextView) view.findViewById(R.id.pickerDrawerListName);
-            holder.btnEdit = (ImageButton) view.findViewById(R.id.btnEdit);
+            holder.tvListName = (TextView) view.findViewById(R.id.adapter_picker_drawer_list_display_tv_list_name);
+            holder.btnEdit = (ImageButton) view.findViewById(R.id.adapter_picker_drawer_list_display_btn_edit);
 
             holder.tvListName.setText(items.get(position).getListName());
 
